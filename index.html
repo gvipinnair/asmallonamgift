@@ -1,89 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>For Gowri 🌸</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Onam Surprise – Gowri</title><link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="petals" aria-hidden="true"></div>
-
+<div id="page">
+  <div class="paper-shadow"></div>
   <main id="app">
-    <!-- INTRO -->
-    <section id="intro" class="scene active">
-      <div class="intro-card">
-        <div class="lotus">🌸</div>
-        <p class="small-label">A little Onam surprise</p>
-        <h1>For Gowri</h1>
-        <p class="intro-text">Someone has been waiting to welcome you...</p>
-        <button id="startBtn" class="gold-btn">Open the door 🚪</button>
-      </div>
+    <section class="scene active" data-step="0">
+      <div class="scene-label">1. Door opens</div>
+      <svg class="drawing" viewBox="0 0 1200 650" aria-label="hand drawn girl opening door">
+        <path class="line" d="M90 610V70H430V610M95 120H430M430 70L690 115V610H430"/>
+        <path class="line" d="M430 100L630 135V605L430 605"/>
+        <g class="character gowri-door">
+          <circle class="line" cx="735" cy="220" r="58"/><path class="line" d="M690 206q44-48 90 0M710 220h7m48 0h7M708 248q28 18 56 0"/>
+          <path class="line" d="M735 278V500M735 330L665 400M735 330L805 390M735 500L685 595M735 500L788 595"/>
+          <path class="line" d="M675 390q-35 8-55 38M795 385q35 6 52 35"/>
+        </g>
+        <g class="door-arrow"><path class="line" d="M570 180q70-35 125-5"/><path class="line" d="M680 163l20 13-23 7"/></g>
+      </svg>
+      <div class="dialogue"><span>Va Gowri, come inside! 🌸</span></div>
+      <button class="action" id="enterHome">Come inside ✨</button>
     </section>
 
-    <!-- REALISTIC DOOR MOMENT -->
-    <section id="doorScene" class="scene cinematic-scene">
-      <div class="photo-frame photo-door"></div>
-      <div class="cinematic-vignette"></div>
-      <div id="welcomeText" class="cinematic-copy">
-        <span>Va Gowri… come inside 🌸</span>
-      </div>
+    <section class="scene" data-step="1">
+      <div class="scene-label">2. Inside the house</div>
+      <svg class="drawing" viewBox="0 0 1200 650">
+        <path class="line" d="M80 590H1120M110 590V130H1090V590M110 170H1090M170 170V590M1010 170V590"/>
+        <path class="line" d="M190 250q100-70 200 0M790 250q100-70 200 0"/>
+        <g class="mouse run"><circle class="line" cx="540" cy="515" r="27"/><circle class="line" cx="520" cy="489" r="10"/><circle class="line" cx="555" cy="487" r="10"/><path class="line" d="M514 515q-42 0-70 24"/><circle cx="530" cy="512" r="3" fill="#111"/></g>
+        <g class="cat chase"><circle class="line" cx="690" cy="485" r="33"/><path class="line" d="M665 465l-8-26 24 15m22 0 24-15-7 26M660 510l-25 48m72-50 25 48M722 490q45 5 62-19"/><circle cx="682" cy="482" r="3" fill="#111"/><circle cx="704" cy="482" r="3" fill="#111"/></g>
+        <g class="child kid1"><circle class="line" cx="350" cy="250" r="35"/><path class="line" d="M350 285V430M350 320l-55 45M350 320l55 45M350 430l-35 90M350 430l40 90M334 245q16-14 32 0"/></g>
+        <g class="child kid2"><circle class="line" cx="890" cy="275" r="32"/><path class="line" d="M890 307V445M890 335l-50 38M890 335l50 38M890 445l-30 80M890 445l34 80"/></g>
+        <g class="sadya"><path class="line" d="M220 565q180-75 360 0M240 520q160-60 320 0"/><ellipse cx="310" cy="505" rx="30" ry="18" fill="none" stroke="#111" stroke-width="6"/><ellipse cx="400" cy="495" rx="30" ry="18" fill="none" stroke="#111" stroke-width="6"/><ellipse cx="490" cy="510" rx="30" ry="18" fill="none" stroke="#111" stroke-width="6"/></g>
+      </svg>
+      <div class="caption">Mouse running • cat chasing • children playing • Sadya being prepared</div>
+      <button class="action" id="next1">Continue ✨</button>
     </section>
 
-    <!-- REALISTIC ENTRY MONTAGE -->
-    <section id="walkScene" class="scene cinematic-scene">
-      <div id="cinematicShots" class="shot-stack" aria-label="Cinematic Onam entrance">
-        <div class="shot active" data-shot="inside" style="background-image:url('assets/real/02_inside.jpg')"></div>
-        <div class="shot" data-shot="entrance" style="background-image:url('assets/real/03_entrance.jpg')"></div>
-        <div class="shot" data-shot="sadya" style="background-image:url('assets/real/04_sadya.jpg')"></div>
-        <div class="shot" data-shot="notice" style="background-image:url('assets/real/05_notice.jpg')"></div>
-        <div class="shot" data-shot="move" style="background-image:url('assets/real/06_move.jpg')"></div>
-      </div>
-      <div class="cinematic-vignette"></div>
-      <div id="entryCaption" class="cinematic-copy subtle-copy"></div>
+    <section class="scene" data-step="2">
+      <div class="scene-label">3. Someone steps forward</div>
+      <svg class="drawing" viewBox="0 0 1200 650">
+        <path class="line" d="M90 600V120H1110V600M90 180H1110"/>
+        <g class="speaker-enter"><circle class="line" cx="620" cy="230" r="65"/><path class="line" d="M572 217q48-55 95 0M590 230h8m45 0h8M592 260q28 20 56 0M620 295V510M620 345L540 415M620 345l80 70M620 510l-55 90M620 510l55 90"/></g>
+        <g class="little-gowri"><circle class="line" cx="330" cy="275" r="45"/><path class="line" d="M300 265q28-28 60 0M315 280h6m28 0h6M315 300q15 10 30 0M330 320V500M330 365l-50 55M330 365l50 55M330 500l-40 80M330 500l40 80"/></g>
+      </svg>
+      <div class="dialogue wide"><span>You look so beautiful today! ❤️</span></div>
+      <button class="action" id="next2">See what happens…</button>
     </section>
 
-    <!-- BIG POOKALAM REVEAL -->
-    <section id="hallScene" class="scene cinematic-scene">
-      <div class="shot-stack reveal-stack">
-        <div id="revealShot" class="shot active" style="background-image:url('assets/real/07_reveal.jpg')"></div>
-        <div id="reactionShot" class="shot" style="background-image:url('assets/real/08_reaction.jpg')"></div>
-      </div>
-      <div class="cinematic-vignette"></div>
-      <div id="revealText" class="cinematic-copy reveal-copy">
-        <span>And then… the surprise.</span>
-      </div>
-      <button id="cardBtn" class="gold-btn reveal-card-btn hidden">There is something for you 💌</button>
+    <section class="scene" data-step="3">
+      <div class="scene-label">4. Mahabali's Onam wish</div>
+      <svg class="drawing" viewBox="0 0 1200 650">
+        <g class="mahabali"><circle class="line" cx="570" cy="190" r="72"/><path class="line" d="M510 175q60-80 120 0M530 150l40-25 40 25M538 210q32 25 65 0M570 262V500M570 325L455 410M570 325l120-90M570 500l-80 95M570 500l80 95M690 235l20-65 8 48"/><path class="line" d="M690 235q35-65 75-72M690 235q35 10 65 35"/></g>
+        <g class="flowers"><path class="flower f1" d="M820 180q30-25 60 0q-30 25-60 0M850 150q25 30 0 60q-25-30 0-60"/><path class="flower f2" d="M900 250q24-22 48 0q-24 22-48 0M924 226q22 24 0 48q-22-24 0-48"/><path class="flower f3" d="M760 295q25-22 50 0q-25 22-50 0M785 270q22 25 0 50q-22-25 0-50"/><path class="flower f4" d="M990 170q20-18 40 0q-20 18-40 0M1010 150q18 20 0 40q-18-20 0-40"/></g>
+      </svg>
+      <div class="cloud"><span>Happy Onam, Gowri! 🌸</span></div>
+      <button class="action" id="next3">Are you ready to enter the hall? ✨</button>
     </section>
 
-    <!-- POSTCARD -->
-    <section id="cardScene" class="scene">
-      <div class="postcard-wrap">
-        <article class="postcard">
-          <div class="card-flower">🌸</div>
-          <p class="card-label">A little Onam wish for you</p>
-          <h1>Happy Onam, Gowri! 🌸</h1>
-          <p>I haven’t even seen you in a dhavani yet, but somehow I already know you’re going to look beautiful in it. ❤️</p>
-          <p>I just wanted to make this little Onam surprise especially for you.</p>
-          <p class="signature">Happy Onam, Gowri! 🌼✨</p>
-          <div class="stamp">🌼<br>ONAM</div>
-        </article>
-        <button id="replayBtn" class="outline-btn">Watch again ↻</button>
+    <section class="scene" data-step="4">
+      <div class="scene-label">5. Ready for the hall?</div>
+      <svg class="drawing" viewBox="0 0 1200 650">
+        <path class="line" d="M100 590V110H1100V590M200 590V180H1000V590M300 590V240H900V590"/>
+        <path class="line" d="M390 320q210-100 420 0"/>
+        <g class="door-hall"><rect x="475" y="210" width="250" height="320" rx="8" fill="none" stroke="#111" stroke-width="6"/><circle cx="690" cy="375" r="7" fill="#111"/><path class="line" d="M350 540q250 40 500 0"/></g>
+      </svg>
+      <div class="dialogue"><span>Are you ready to enter the hall?</span></div>
+      <button class="action" id="enterHall">Enter the hall ✨</button>
+    </section>
+
+    <section class="scene reveal-scene" data-step="5">
+      <div class="scene-label">6. The big reveal</div>
+      <div class="reveal-wrap">
+        <div class="sound-note">♪</div>
+        <img class="pookalam" src="assets/gowri-pookalam-face.png" alt="Gowri pookalam">
       </div>
+      <div class="reveal-caption">Gowri… this one is for you. 🌼</div>
+      <button class="action dark" id="postcardBtn">Open your postcard 💌</button>
+    </section>
+
+    <section class="scene postcard-scene" data-step="6">
+      <div class="postcard">
+        <div class="small-flower">🌸</div>
+        <p>A little Onam wish for you</p>
+        <h1>Happy Onam, Gowri! 🌼</h1>
+        <p>I haven’t even seen you in a dhavani yet,<br>but somehow I already know you’re going to look<br>beautiful in it. ❤️</p>
+        <p>I just wanted to make this little Onam surprise especially for you.</p>
+        <strong>Happy Onam, Gowri! ✨</strong>
+      </div>
+      <button class="restart" id="restart">Watch again ↻</button>
     </section>
   </main>
-
-  <audio id="music" loop preload="auto">
-    <source src="assets/onam-music.mp3" type="audio/mpeg">
-  </audio>
-
-  <audio id="voice" preload="auto">
-    <source src="assets/gowri-voice.mp3" type="audio/mpeg">
-  </audio>
-
-  <script src="script.js"></script>
+</div>
+<audio id="voice" preload="auto"><source src="assets/gowri-voice.mp3" type="audio/mpeg"></audio>
+<script src="script.js"></script>
 </body>
 </html>
