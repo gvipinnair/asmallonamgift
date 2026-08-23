@@ -1,25 +1,20 @@
-# Vipinok — Onam Surprise
+# Vipin Onam Surprise – 9-scene version
 
-GitHub Pages-ready 15-panel hand-drawn Onam surprise for Gowri.
+The supplied panel images are used as the visual design.
 
-## Upload
-Upload the **contents of this folder** to the root of your GitHub Pages repository.
+Scene order:
+1. Opening
+2. Door / Come inside
+3. Mouse + cat + children / Sadya
+4. You look so beautiful today
+5. Mahabali walks in
+6. Mahabali raises his hand + colorful glass bangles
+7. Ready to enter the hall
+8. Hall reveal – `gowri-pookalam-face.png` + `gowri-voice.mp3`
+9. Original postcard
 
-Keep the `assets/panels/` folder and `assets/gowri-voice.mp3` in the same locations.
-
-## Story
-1. Intro / Open the door
-2. Girl welcomes Gowri
-3. Mouse falls
-4. Cat chases mouse
-5. Chase continues
-6. Cat and mouse near plant
-7. Children playing
-8. Compliment
-9. Mahabali enters
-10. Mahabali raises his hand
-11. Mahabali gives colorful glass bangles
-12. Locked hall door
-13. Hall doors open
-14. Pookalam reveal + Onam voice
-15. Original postcard message
+Important:
+- The visible buttons in panels 1–7 and 9 are already part of the supplied images.
+- The HTML uses invisible click areas over those buttons, so no duplicate buttons appear.
+- Put `gowri-pookalam-face.png` and `gowri-voice.mp3` inside `assets/`.
+- The page uses a short movie-like slide transition between scenes.

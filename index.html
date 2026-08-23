@@ -1,32 +1,73 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#f7f0df">
-  <title>Onam Surprise — Gowri</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Onam Surprise – Gowri</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="movie" aria-label="Onam surprise for Gowri">
-    <div class="stage">
-      <img id="panel" class="panel" src="assets/panels/panel-01.png" alt="Onam surprise panel">
+<main id="movie">
 
-      <!-- Click targets sit over the buttons drawn inside the exact artwork. -->
-      <button id="openDoor" class="hotspot hotspot-intro" aria-label="Open the door"></button>
-      <button id="comeInside" class="hotspot hotspot-come" aria-label="Come inside"></button>
-      <button id="enterHall" class="hotspot hotspot-hall" aria-label="Enter the hall"></button>
+  <section class="scene active" id="scene1">
+    <img src="assets/1.PNG" alt="Onam surprise opening">
+    <button class="hotspot" id="go1" aria-label="Open the door"></button>
+  </section>
+
+  <section class="scene" id="scene2">
+    <img src="assets/2.PNG" alt="Gowri opening the door">
+    <button class="hotspot" id="go2" aria-label="Come inside"></button>
+  </section>
+
+  <section class="scene" id="scene3">
+    <img src="assets/3.PNG" alt="Mouse and cat inside the house">
+    <button class="hotspot" id="go3" aria-label="Continue"></button>
+  </section>
+
+  <section class="scene" id="scene4">
+    <img src="assets/4.PNG" alt="You look so beautiful today">
+    <button class="hotspot" id="go4" aria-label="Continue"></button>
+  </section>
+
+  <section class="scene" id="scene5">
+    <img src="assets/5.PNG" alt="Mahabali walking in">
+    <button class="hotspot" id="go5" aria-label="Watch Mahabali"></button>
+  </section>
+
+  <section class="scene" id="scene6">
+    <img src="assets/6.PNG" alt="Mahabali gives colorful glass bangles">
+    <button class="hotspot" id="go6" aria-label="Happy Onam"></button>
+  </section>
+
+  <section class="scene" id="scene7">
+    <img src="assets/7.PNG" alt="Ready to enter the hall">
+    <button class="hotspot" id="go7" aria-label="Enter the hall"></button>
+  </section>
+
+  <section class="scene reveal" id="scene8">
+    <div class="reveal-frame">
+      <div class="lamp left">🪔</div>
+      <img src="assets/gowri-pookalam-face.png"
+           alt="Gowri flower portrait pookalam"
+           class="pookalam"
+           onerror="this.classList.add('missing')">
+      <div class="lamp right">🪔</div>
+      <div class="reveal-message">Gowri… this one is for you. 🌸</div>
+      <div class="missing-note">Add <b>gowri-pookalam-face.png</b> to the assets folder.</div>
     </div>
+    <button class="reveal-button" id="go8">Open your postcard 💌</button>
+  </section>
 
-    <div class="controls">
-      <button id="prev" class="control" type="button">←</button>
-      <div class="progress" aria-label="Story progress"><span id="progressFill"></span></div>
-      <button id="next" class="control" type="button">→</button>
-    </div>
-    <p class="hint" id="hint">Click “Open the door” to begin ✨</p>
-  </main>
+  <section class="scene postcard" id="scene9">
+    <img src="assets/9.PNG" alt="Onam postcard">
+    <button class="hotspot" id="restart" aria-label="Watch again"></button>
+  </section>
 
-  <audio id="voice" preload="auto" src="assets/gowri-voice.mp3"></audio>
-  <script src="script.js"></script>
+</main>
+
+<audio id="voice" preload="auto">
+  <source src="assets/gowri-voice.mp3" type="audio/mpeg">
+</audio>
+<script src="script.js"></script>
 </body>
 </html>
