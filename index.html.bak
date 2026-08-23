@@ -13,7 +13,7 @@
   <section class="scene intro-scene active" id="introScene">
     <img class="intro-art" src="assets/intro-screen.png" alt="A little Onam surprise for Gowri">
     <div class="intro-overlay">
-      <button class="intro-button" id="enterHome" aria-label="Open the door">Open the door 🚪</button>
+      <button class="action intro-button button-gold" id="enterHome">Open the door 🚪</button>
     </div>
   </section>
 
@@ -100,6 +100,7 @@
       <circle class="play-ball" cx="430" cy="500" r="18"/>
     </svg>
 
+    <div class="caption color-cap">A little Onam chaos! 🐭 🐱</div>
     <button class="action button-green" id="continueInside">Continue ✨</button>
   </section>
 
@@ -154,6 +155,7 @@
       </g>
     </svg>
     <div class="speech speech-orange maha-bubble">Vipin told me that you like bangles, so I bought them for you! 💕</div>
+    <div class="tiny-onam">Happy Onam, Gowri! 🌸</div>
     <button class="action button-pink" id="readyHall">Are you ready for the hall? ✨</button>
   </section>
 
@@ -185,6 +187,7 @@
       <div class="note note-one">♪</div>
       <div class="note note-two">♫</div>
     </div>
+    <div class="reveal-caption">Gowri… this one is for you. 🌼</div>
     <button class="action button-orange" id="postcardBtn">Open your postcard 💌</button>
   </section>
 
@@ -196,7 +199,7 @@
       <h1>Happy Onam, Gowri! 🌼</h1>
       <p>I haven’t even seen you in a dhavani yet,<br>but somehow I already know you’re going to look<br>beautiful in it. ❤️</p>
       <p>I just wanted to make this little Onam surprise especially for you.</p>
-      <p>Happy Onam, Gowri! 🌼✨</p>
+      <strong>Happy Onam, Gowri! ✨</strong>
     </article>
     <button class="restart button-pink" id="restart">Watch again ↻</button>
   </section>

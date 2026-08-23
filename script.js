@@ -1,87 +1,73 @@
 (() => {
   'use strict';
 
-  const scenes = {
-    intro: document.getElementById('introScene'),
-    door: document.getElementById('doorScene'),
-    inside: document.getElementById('insideScene'),
-    compliment: document.getElementById('complimentScene'),
-    mahabali: document.getElementById('mahabaliScene'),
-    hall: document.getElementById('hallDoorScene'),
-    reveal: document.getElementById('revealScene'),
-    postcard: document.getElementById('postcardScene')
-  };
+  const scenes = Object.fromEntries(
+    [...document.querySelectorAll('.scene')].map((node) => [node.id.replace('Scene','').replace(/^intro$/,'intro'), node])
+  );
 
   const voice = document.getElementById('voice');
   const hallDoor = document.getElementById('closedHallDoor');
   const doorLock = document.getElementById('doorLock');
   let current = 'intro';
-  let voiceStarted = false;
 
   function show(name) {
-    Object.entries(scenes).forEach(([key, node]) => {
-      node.classList.toggle('active', key === name);
-    });
+    Object.values(scenes).forEach((node) => node.classList.toggle('active', node.id === `${name}Scene`));
     current = name;
 
-    // Reset scene-specific one-shot states whenever a scene is entered.
+    const comeInside = document.getElementById('comeInside');
     if (name === 'door') {
-      document.getElementById('comeInside')?.classList.add('hidden');
-      window.setTimeout(() => document.getElementById('comeInside')?.classList.remove('hidden'), 2100);
+      comeInside?.classList.add('hidden');
+      window.setTimeout(() => comeInside?.classList.remove('hidden'), 1500);
     }
 
-    if (name === 'hall') {
+    if (name === 'hallDoor') {
       hallDoor?.classList.remove('opening');
       if (doorLock) doorLock.style.opacity = '1';
     }
 
     if (name === 'reveal') {
-      voiceStarted = false;
       if (voice) {
+        voice.pause();
         try { voice.currentTime = 0; } catch (_) {}
-        const p = voice.play();
-        if (p && typeof p.catch === 'function') p.catch(() => {});
-        voiceStarted = true;
+        const playPromise = voice.play();
+        if (playPromise?.catch) playPromise.catch(() => {});
       }
     }
   }
 
-  function click(id, fn) {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('click', fn);
+  function on(id, handler) {
+    document.getElementById(id)?.addEventListener('click', handler);
   }
 
-  click('enterHome', () => show('door'));
-  click('comeInside', () => show('inside'));
-  click('continueInside', () => show('compliment'));
-  click('continueCompliment', () => show('mahabali'));
-  click('readyHall', () => show('hall'));
+  on('enterHome', () => show('door'));
+  on('comeInside', () => show('inside'));
+  on('continueInside', () => show('compliment'));
+  on('continueCompliment', () => show('mahabali'));
+  on('readyHall', () => show('hallDoor'));
 
-  click('enterHall', () => {
-    // The hall starts locked. User action unlocks it, then both doors open.
+  on('enterHall', () => {
     hallDoor?.classList.add('opening');
     window.setTimeout(() => show('reveal'), 1350);
   });
 
-  click('postcardBtn', () => show('postcard'));
-  click('restart', () => {
+  on('postcardBtn', () => show('postcard'));
+  on('restart', () => {
+    voice?.pause();
     if (voice) {
-      voice.pause();
       try { voice.currentTime = 0; } catch (_) {}
     }
+    hallDoor?.classList.remove('opening');
     show('intro');
   });
 
-  if (voice) {
-    voice.addEventListener('ended', () => {
-      if (current === 'reveal') show('postcard');
-    });
-  }
+  voice?.addEventListener('ended', () => {
+    if (current === 'reveal') show('postcard');
+  });
 
   window.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
+      voice?.pause();
       if (voice) {
-        voice.pause();
         try { voice.currentTime = 0; } catch (_) {}
       }
       show('intro');
