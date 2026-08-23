@@ -1,13 +1,11 @@
 # Onam Surprise – Gowri
 
-A hand-drawn black-marker Onam surprise with animated character actions.
+A short-movie-style hand-drawn Onam surprise for Gowri.
 
 ## Flow
-Door interaction → Gowri walks inside → mouse/cat/children/Sadya movement → compliment → Mahabali blessing → hall door → real Gowri pookalam reveal + voice → postcard.
+Intro → door welcome → house chaos → compliment → Mahabali + colorful glass bangles → locked hall door → user opens hall → Gowri pookalam reveal + voice → postcard.
 
 ## Assets
-Keep these files in `assets/`:
-- `gowri-pookalam-face.png`
-- `gowri-voice.mp3`
-
-No colored notebook lines are used; the background is plain warm paper.
+- `assets/intro-screen.png`
+- `assets/gowri-pookalam-face.png`
+- `assets/gowri-voice.mp3`

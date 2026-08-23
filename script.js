@@ -1,81 +1,92 @@
-const scenes = Array.from(document.querySelectorAll('.scene'));
-const voice = document.getElementById('voice');
-let current = 0;
-let timers = [];
+(() => {
+  'use strict';
 
-function clearTimers() {
-  timers.forEach(clearTimeout);
-  timers = [];
-}
+  const scenes = {
+    intro: document.getElementById('introScene'),
+    door: document.getElementById('doorScene'),
+    inside: document.getElementById('insideScene'),
+    compliment: document.getElementById('complimentScene'),
+    mahabali: document.getElementById('mahabaliScene'),
+    hall: document.getElementById('hallDoorScene'),
+    reveal: document.getElementById('revealScene'),
+    postcard: document.getElementById('postcardScene')
+  };
 
-function restartSceneAnimations(scene) {
-  scene.querySelectorAll('*').forEach((el) => {
-    if (!el.classList.contains('dialogue') && !el.classList.contains('cloud')) {
-      el.style.animation = 'none';
+  const voice = document.getElementById('voice');
+  const hallDoor = document.getElementById('closedHallDoor');
+  const doorLock = document.getElementById('doorLock');
+  let current = 'intro';
+  let voiceStarted = false;
+
+  function show(name) {
+    Object.entries(scenes).forEach(([key, node]) => {
+      node.classList.toggle('active', key === name);
+    });
+    current = name;
+
+    // Reset scene-specific one-shot states whenever a scene is entered.
+    if (name === 'door') {
+      document.getElementById('comeInside')?.classList.add('hidden');
+      window.setTimeout(() => document.getElementById('comeInside')?.classList.remove('hidden'), 2100);
     }
-  });
-  void scene.offsetWidth;
-  scene.querySelectorAll('*').forEach((el) => {
-    if (!el.classList.contains('dialogue') && !el.classList.contains('cloud')) {
-      el.style.animation = '';
+
+    if (name === 'hall') {
+      hallDoor?.classList.remove('opening');
+      if (doorLock) doorLock.style.opacity = '1';
     }
+
+    if (name === 'reveal') {
+      voiceStarted = false;
+      if (voice) {
+        try { voice.currentTime = 0; } catch (_) {}
+        const p = voice.play();
+        if (p && typeof p.catch === 'function') p.catch(() => {});
+        voiceStarted = true;
+      }
+    }
+  }
+
+  function click(id, fn) {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('click', fn);
+  }
+
+  click('enterHome', () => show('door'));
+  click('comeInside', () => show('inside'));
+  click('continueInside', () => show('compliment'));
+  click('continueCompliment', () => show('mahabali'));
+  click('readyHall', () => show('hall'));
+
+  click('enterHall', () => {
+    // The hall starts locked. User action unlocks it, then both doors open.
+    hallDoor?.classList.add('opening');
+    window.setTimeout(() => show('reveal'), 1350);
   });
-}
 
-function show(index) {
-  if (index < 0 || index >= scenes.length) return;
-  clearTimers();
-  scenes.forEach((scene, i) => scene.classList.toggle('active', i === index));
-  current = index;
+  click('postcardBtn', () => show('postcard'));
+  click('restart', () => {
+    if (voice) {
+      voice.pause();
+      try { voice.currentTime = 0; } catch (_) {}
+    }
+    show('intro');
+  });
 
-  const active = scenes[index];
-  void active.offsetWidth;
-  active.classList.remove('ready');
-  void active.offsetWidth;
-  restartSceneAnimations(active);
-
-  if (index === 0) {
-    timers.push(setTimeout(() => active.classList.add('ready'), 2450));
-  }
-
-  if (index === 3) {
-    // Mahabali walks in from the side, pauses, raises his hand, then releases flowers + bangles.
-    timers.push(setTimeout(() => active.classList.add('mahabali-action'), 50));
-  }
-
-  if (index === 5) {
-    timers.push(setTimeout(playVoice, 700));
-  }
-}
-
-function playVoice() {
-  if (!voice) return;
-  voice.currentTime = 0;
-  const p = voice.play();
-  if (p && typeof p.catch === 'function') p.catch(() => {});
-}
-
-function bind(id, handler) {
-  const el = document.getElementById(id);
-  if (el) el.addEventListener('click', handler);
-}
-
-bind('enterHome', () => show(1));
-bind('next1', () => show(2));
-bind('next2', () => show(3));
-bind('next3', () => show(4));
-bind('enterHall', () => show(5));
-bind('postcardBtn', () => show(6));
-bind('restart', () => {
   if (voice) {
-    voice.pause();
-    voice.currentTime = 0;
+    voice.addEventListener('ended', () => {
+      if (current === 'reveal') show('postcard');
+    });
   }
-  show(0);
-});
 
-if (voice) {
-  voice.addEventListener('ended', () => show(6));
-}
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      if (voice) {
+        voice.pause();
+        try { voice.currentTime = 0; } catch (_) {}
+      }
+      show('intro');
+    }
+  });
 
-show(0);
+  show('intro');
+})();
