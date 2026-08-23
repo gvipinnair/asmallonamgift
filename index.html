@@ -1,100 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Onam Surprise – Gowri</title><link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onam Surprise – Gowri</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="page">
-  <div class="paper-shadow"></div>
-  <main id="app">
-    <section class="scene active" data-step="0">
-      <div class="scene-label">1. Door opens</div>
-      <svg class="drawing" viewBox="0 0 1200 650" aria-label="hand drawn girl opening door">
-        <path class="line" d="M90 610V70H430V610M95 120H430M430 70L690 115V610H430"/>
-        <path class="line" d="M430 100L630 135V605L430 605"/>
-        <g class="character gowri-door">
-          <circle class="line" cx="735" cy="220" r="58"/><path class="line" d="M690 206q44-48 90 0M710 220h7m48 0h7M708 248q28 18 56 0"/>
-          <path class="line" d="M735 278V500M735 330L665 400M735 330L805 390M735 500L685 595M735 500L788 595"/>
-          <path class="line" d="M675 390q-35 8-55 38M795 385q35 6 52 35"/>
-        </g>
-        <g class="door-arrow"><path class="line" d="M570 180q70-35 125-5"/><path class="line" d="M680 163l20 13-23 7"/></g>
-      </svg>
-      <div class="dialogue"><span>Va Gowri, come inside! 🌸</span></div>
-      <button class="action" id="enterHome">Come inside ✨</button>
-    </section>
+  <div id="page">
+    <div class="paper-shadow" aria-hidden="true"></div>
+    <main id="app">
 
-    <section class="scene" data-step="1">
-      <div class="scene-label">2. Inside the house</div>
-      <svg class="drawing" viewBox="0 0 1200 650">
-        <path class="line" d="M80 590H1120M110 590V130H1090V590M110 170H1090M170 170V590M1010 170V590"/>
-        <path class="line" d="M190 250q100-70 200 0M790 250q100-70 200 0"/>
-        <g class="mouse run"><circle class="line" cx="540" cy="515" r="27"/><circle class="line" cx="520" cy="489" r="10"/><circle class="line" cx="555" cy="487" r="10"/><path class="line" d="M514 515q-42 0-70 24"/><circle cx="530" cy="512" r="3" fill="#111"/></g>
-        <g class="cat chase"><circle class="line" cx="690" cy="485" r="33"/><path class="line" d="M665 465l-8-26 24 15m22 0 24-15-7 26M660 510l-25 48m72-50 25 48M722 490q45 5 62-19"/><circle cx="682" cy="482" r="3" fill="#111"/><circle cx="704" cy="482" r="3" fill="#111"/></g>
-        <g class="child kid1"><circle class="line" cx="350" cy="250" r="35"/><path class="line" d="M350 285V430M350 320l-55 45M350 320l55 45M350 430l-35 90M350 430l40 90M334 245q16-14 32 0"/></g>
-        <g class="child kid2"><circle class="line" cx="890" cy="275" r="32"/><path class="line" d="M890 307V445M890 335l-50 38M890 335l50 38M890 445l-30 80M890 445l34 80"/></g>
-        <g class="sadya"><path class="line" d="M220 565q180-75 360 0M240 520q160-60 320 0"/><ellipse cx="310" cy="505" rx="30" ry="18" fill="none" stroke="#111" stroke-width="6"/><ellipse cx="400" cy="495" rx="30" ry="18" fill="none" stroke="#111" stroke-width="6"/><ellipse cx="490" cy="510" rx="30" ry="18" fill="none" stroke="#111" stroke-width="6"/></g>
-      </svg>
-      <div class="caption">Mouse running • cat chasing • children playing • Sadya being prepared</div>
-      <button class="action" id="next1">Continue ✨</button>
-    </section>
+      <!-- 1. DOOR -->
+      <section class="scene active door-scene" data-step="0">
+        <div class="scene-label">1. Door opens</div>
+        <svg class="drawing" viewBox="0 0 1200 650" aria-label="A hand drawn girl reaches for a door handle and opens the door">
+          <g class="house">
+            <path class="line" d="M120 600V90H670V600"/>
+            <path class="line" d="M120 145H670"/>
+            <path class="line" d="M160 90H630"/>
+          </g>
 
-    <section class="scene" data-step="2">
-      <div class="scene-label">3. Someone steps forward</div>
-      <svg class="drawing" viewBox="0 0 1200 650">
-        <path class="line" d="M90 600V120H1110V600M90 180H1110"/>
-        <g class="speaker-enter"><circle class="line" cx="620" cy="230" r="65"/><path class="line" d="M572 217q48-55 95 0M590 230h8m45 0h8M592 260q28 20 56 0M620 295V510M620 345L540 415M620 345l80 70M620 510l-55 90M620 510l55 90"/></g>
-        <g class="little-gowri"><circle class="line" cx="330" cy="275" r="45"/><path class="line" d="M300 265q28-28 60 0M315 280h6m28 0h6M315 300q15 10 30 0M330 320V500M330 365l-50 55M330 365l50 55M330 500l-40 80M330 500l40 80"/></g>
-      </svg>
-      <div class="dialogue wide"><span>You look so beautiful today! ❤️</span></div>
-      <button class="action" id="next2">See what happens…</button>
-    </section>
+          <!-- door leaf swings open -->
+          <g class="door-leaf">
+            <rect class="shape" x="250" y="150" width="310" height="430" rx="6"/>
+            <path class="line" d="M275 175H535V555H275Z"/>
+            <circle class="ink" cx="520" cy="368" r="10"/>
+            <path class="line" d="M520 350V386"/>
+          </g>
 
-    <section class="scene" data-step="3">
-      <div class="scene-label">4. Mahabali's Onam wish</div>
-      <svg class="drawing" viewBox="0 0 1200 650">
-        <g class="mahabali"><circle class="line" cx="570" cy="190" r="72"/><path class="line" d="M510 175q60-80 120 0M530 150l40-25 40 25M538 210q32 25 65 0M570 262V500M570 325L455 410M570 325l120-90M570 500l-80 95M570 500l80 95M690 235l20-65 8 48"/><path class="line" d="M690 235q35-65 75-72M690 235q35 10 65 35"/></g>
-        <g class="flowers"><path class="flower f1" d="M820 180q30-25 60 0q-30 25-60 0M850 150q25 30 0 60q-25-30 0-60"/><path class="flower f2" d="M900 250q24-22 48 0q-24 22-48 0M924 226q22 24 0 48q-22-24 0-48"/><path class="flower f3" d="M760 295q25-22 50 0q-25 22-50 0M785 270q22 25 0 50q-22-25 0-50"/><path class="flower f4" d="M990 170q20-18 40 0q-20 18-40 0M1010 150q18 20 0 40q-18-20 0-40"/></g>
-      </svg>
-      <div class="cloud"><span>Happy Onam, Gowri! 🌸</span></div>
-      <button class="action" id="next3">Are you ready to enter the hall? ✨</button>
-    </section>
+          <!-- girl -->
+          <g class="girl-door">
+            <circle class="line" cx="830" cy="228" r="56"/>
+            <path class="line" d="M784 214q46-44 92 0"/>
+            <path class="line" d="M806 234h7m38 0h7"/>
+            <path class="smile" d="M806 257q25 18 50 0"/>
+            <path class="line" d="M830 284V490"/>
+            <path class="arm-reach line" d="M830 330L710 350L520 368"/>
+            <path class="arm-back line" d="M830 332L910 398"/>
+            <path class="leg-left line" d="M830 490L772 590"/>
+            <path class="leg-right line" d="M830 490L886 590"/>
+            <circle class="hand" cx="520" cy="368" r="8"/>
+          </g>
 
-    <section class="scene" data-step="4">
-      <div class="scene-label">5. Ready for the hall?</div>
-      <svg class="drawing" viewBox="0 0 1200 650">
-        <path class="line" d="M100 590V110H1100V590M200 590V180H1000V590M300 590V240H900V590"/>
-        <path class="line" d="M390 320q210-100 420 0"/>
-        <g class="door-hall"><rect x="475" y="210" width="250" height="320" rx="8" fill="none" stroke="#111" stroke-width="6"/><circle cx="690" cy="375" r="7" fill="#111"/><path class="line" d="M350 540q250 40 500 0"/></g>
-      </svg>
-      <div class="dialogue"><span>Are you ready to enter the hall?</span></div>
-      <button class="action" id="enterHall">Enter the hall ✨</button>
-    </section>
+          <g class="tiny-arrows">
+            <path class="line" d="M645 265q55 15 70 62"/>
+            <path class="line" d="M702 321l14 8-4-18"/>
+          </g>
+        </svg>
 
-    <section class="scene reveal-scene" data-step="5">
-      <div class="scene-label">6. The big reveal</div>
-      <div class="reveal-wrap">
-        <div class="sound-note">♪</div>
-        <img class="pookalam" src="assets/gowri-pookalam-face.png" alt="Gowri pookalam">
-      </div>
-      <div class="reveal-caption">Gowri… this one is for you. 🌼</div>
-      <button class="action dark" id="postcardBtn">Open your postcard 💌</button>
-    </section>
+        <div class="dialogue intro-dialog"><span>Va Gowri, come inside! 🌸</span></div>
+        <button class="action delayed" id="enterHome">Come inside ✨</button>
+      </section>
 
-    <section class="scene postcard-scene" data-step="6">
-      <div class="postcard">
-        <div class="small-flower">🌸</div>
-        <p>A little Onam wish for you</p>
-        <h1>Happy Onam, Gowri! 🌼</h1>
-        <p>I haven’t even seen you in a dhavani yet,<br>but somehow I already know you’re going to look<br>beautiful in it. ❤️</p>
-        <p>I just wanted to make this little Onam surprise especially for you.</p>
-        <strong>Happy Onam, Gowri! ✨</strong>
-      </div>
-      <button class="restart" id="restart">Watch again ↻</button>
-    </section>
-  </main>
-</div>
-<audio id="voice" preload="auto"><source src="assets/gowri-voice.mp3" type="audio/mpeg"></audio>
-<script src="script.js"></script>
+      <!-- 2. INSIDE -->
+      <section class="scene inside-scene" data-step="1">
+        <div class="scene-label">2. Inside the house</div>
+        <svg class="drawing" viewBox="0 0 1200 650" aria-label="Hand drawn children playing while a mouse runs and a cat chases it">
+          <path class="line" d="M80 590H1120"/>
+          <path class="line" d="M100 130V590M1100 130V590M100 130H1100"/>
+          <path class="line" d="M180 205q95-70 190 0M830 205q95-70 190 0"/>
+
+          <!-- Gowri walking into the house -->
+          <g class="walker gowri-walker">
+            <circle class="line" cx="600" cy="180" r="44"/>
+            <path class="line" d="M567 171q33-32 66 0"/>
+            <path class="line" d="M584 188h6m31 0h6"/>
+            <path class="smile" d="M584 207q17 13 34 0"/>
+            <path class="torso line" d="M600 224V390"/>
+            <path class="arm-a line" d="M600 255L540 320"/>
+            <path class="arm-b line" d="M600 255L660 310"/>
+            <path class="leg-a line" d="M600 390L555 520"/>
+            <path class="leg-b line" d="M600 390L650 520"/>
+          </g>
+
+          <!-- mouse: jumps in from the top, then races around the room -->
+          <g class="mouse">
+            <circle class="line" cx="440" cy="512" r="25"/>
+            <circle class="line" cx="424" cy="486" r="9"/>
+            <circle class="line" cx="455" cy="486" r="9"/>
+            <path class="line" d="M416 510q-58 6-84 35"/>
+            <circle class="ink" cx="428" cy="510" r="3"/>
+            <path class="line mouse-tail" d="M414 530q-38 18-44 52"/>
+          </g>
+
+          <!-- cat: enters behind the mouse and follows its route around the corners -->
+          <g class="cat">
+            <circle class="line" cx="690" cy="485" r="32"/>
+            <path class="line" d="M667 462L656 435L680 449M710 449L734 435L724 462"/>
+            <path class="line" d="M662 516L630 558M718 514L750 556"/>
+            <path class="line" d="M720 488q45 10 68-16"/>
+            <circle class="ink" cx="680" cy="482" r="3"/><circle class="ink" cx="701" cy="482" r="3"/>
+            <path class="line cat-tail" d="M720 505q44 38 12 66"/>
+          </g>
+
+          <!-- child 1 -->
+          <g class="child kid-one">
+            <circle class="line" cx="290" cy="260" r="34"/>
+            <path class="line" d="M290 295V420"/>
+            <path class="arm-1 line" d="M290 320L235 355"/>
+            <path class="arm-2 line" d="M290 320L350 345"/>
+            <path class="leg-1 line" d="M290 420L245 510"/>
+            <path class="leg-2 line" d="M290 420L340 505"/>
+            <path class="smile" d="M277 270q14 10 28 0"/>
+          </g>
+
+          <!-- child 2 -->
+          <g class="child kid-two">
+            <circle class="line" cx="890" cy="270" r="32"/>
+            <path class="line" d="M890 303V430"/>
+            <path class="arm-1 line" d="M890 328L835 355"/>
+            <path class="arm-2 line" d="M890 328L945 362"/>
+            <path class="leg-1 line" d="M890 430L850 510"/>
+            <path class="leg-2 line" d="M890 430L930 510"/>
+            <path class="smile" d="M878 279q13 9 25 0"/>
+          </g>
+
+          <!-- sadya -->
+          <g class="sadya">
+            <path class="line" d="M180 555q170-74 360 0"/>
+            <path class="line" d="M205 515q145-58 300 0"/>
+            <ellipse class="plate" cx="275" cy="505" rx="30" ry="18"/>
+            <ellipse class="plate" cx="370" cy="495" rx="30" ry="18"/>
+            <ellipse class="plate" cx="470" cy="510" rx="30" ry="18"/>
+          </g>
+
+          <!-- tiny festive details -->
+          <g class="festive-doodles" aria-hidden="true">
+            <path class="line" d="M1010 500q35-45 70 0"/>
+            <path class="line" d="M1030 505l15 20 15-20"/>
+            <path class="line" d="M1028 535q27-15 54 0"/>
+          </g>
+        </svg>
+        <div class="caption">Mouse running • cat chasing • children playing • Sadya being prepared</div>
+        <button class="action" id="next1">Continue ✨</button>
+      </section>
+
+      <!-- 3. COMPLIMENT -->
+      <section class="scene compliment-scene" data-step="2">
+        <div class="scene-label">3. Someone walks over</div>
+        <svg class="drawing" viewBox="0 0 1200 650" aria-label="A hand drawn person walks over and gives a compliment">
+          <path class="line" d="M100 585H1100"/>
+          <g class="person-compliment">
+            <circle class="line" cx="660" cy="220" r="64"/>
+            <path class="line" d="M612 207q48-52 96 0"/>
+            <path class="line" d="M634 220h7m40 0h7"/>
+            <path class="laugh-mouth" d="M632 252q28 28 56 0"/>
+            <path class="torso line" d="M660 284V470"/>
+            <path class="arm-wave line" d="M660 320L745 350L785 295"/>
+            <path class="arm-other line" d="M660 320L575 380"/>
+            <path class="leg-1 line" d="M660 470L600 590"/>
+            <path class="leg-2 line" d="M660 470L725 590"/>
+          </g>
+          <g class="little-gowri">
+            <circle class="line" cx="340" cy="280" r="42"/>
+            <path class="line" d="M310 268q30-30 60 0"/>
+            <path class="line" d="M326 283h6m28 0h6"/>
+            <path class="smile" d="M326 300q14 12 28 0"/>
+            <path class="line" d="M340 322V470M340 360L290 410M340 360L390 410M340 470L300 555M340 470L380 555"/>
+          </g>
+        </svg>
+        <div class="dialogue wide compliment-bubble"><span>You look so beautiful today! ❤️</span></div>
+        <button class="action" id="next2">See what happens…</button>
+      </section>
+
+      <!-- 4. MAHABALI -->
+      <section class="scene mahabali-scene" data-step="3">
+        <div class="scene-label">4. Mahabali's Onam wish</div>
+        <svg class="drawing" viewBox="0 0 1200 650" aria-label="Mahabali raises his hand and flowers appear">
+          <g class="mahabali-person">
+            <circle class="line" cx="535" cy="200" r="70"/>
+            <path class="line" d="M480 181q55-78 110 0"/>
+            <path class="line" d="M495 155l40-30 40 30"/>
+            <path class="line" d="M502 215q32 25 64 0"/>
+            <path class="line" d="M535 272V500"/>
+            <path class="arm-up line" d="M535 330L645 255L665 165"/>
+            <path class="hand-up line" d="M665 165q15-25 28-4q-2-36 12-27q10 12 6 34q16-22 24-8q7 20-18 44"/>
+            <!-- bangles held in Mahabali's raised hand -->
+            <ellipse class="bangle bangle-main" cx="705" cy="210" rx="24" ry="9"/>
+            <ellipse class="bangle bangle-second" cx="710" cy="222" rx="24" ry="9"/>
+            <ellipse class="bangle bangle-third" cx="716" cy="234" rx="24" ry="9"/>
+            <path class="arm-down line" d="M535 330L430 405"/>
+            <path class="leg-1 line" d="M535 500L460 595"/>
+            <path class="leg-2 line" d="M535 500L610 595"/>
+          </g>
+
+          <g class="flower-burst">
+            <path class="flower-petal petal-1 line" d="M760 145q25-22 50 0q-25 22-50 0M785 120q22 25 0 50q-22-25 0-50"/>
+            <path class="flower-petal petal-2 line" d="M835 215q22-20 44 0q-22 20-44 0M857 193q20 22 0 44q-20-22 0-44"/>
+            <path class="flower-petal petal-3 line" d="M730 280q20-18 40 0q-20 18-40 0M750 260q18 20 0 40q-18-20 0-40"/>
+            <path class="flower-petal petal-4 line" d="M930 155q18-16 36 0q-18 16-36 0M948 137q16 18 0 36q-16-18 0-36"/>
+            <path class="flower-petal petal-5 line" d="M965 265q15-15 30 0q-15 15-30 0M980 250q14 15 0 30q-14-15 0-30"/>
+            <path class="flower-petal petal-6 line" d="M805 320q18-16 36 0q-18 16-36 0M823 302q16 18 0 36q-16-18 0-36"/>
+          </g>
+
+          <g class="bangle-burst">
+            <ellipse class="flying-bangle b1" cx="760" cy="170" rx="22" ry="8"/>
+            <ellipse class="flying-bangle b2" cx="810" cy="240" rx="22" ry="8"/>
+            <ellipse class="flying-bangle b3" cx="755" cy="305" rx="22" ry="8"/>
+          </g>
+        </svg>
+        <div class="cloud happy-bubble"><span>I was told you like bangles! ✨<br><small>Happy Onam, Gowri! 🌸</small></span></div>
+        <button class="action" id="next3">Are you ready to enter the hall? ✨</button>
+      </section>
+
+      <!-- 5. HALL DOOR -->
+      <section class="scene hall-door-scene" data-step="4">
+        <div class="scene-label">5. Ready for the hall?</div>
+        <svg class="drawing" viewBox="0 0 1200 650" aria-label="A hand drawn hall door opens">
+          <path class="line" d="M120 590V100H1080V590"/>
+          <g class="hall-door-leaf">
+            <rect class="shape" x="470" y="180" width="260" height="360" rx="8"/>
+            <path class="line" d="M500 210H700V510H500Z"/>
+            <circle class="ink" cx="675" cy="360" r="9"/>
+          </g>
+          <path class="line" d="M300 555q300-65 600 0"/>
+          <g class="hall-walker">
+            <circle class="line" cx="340" cy="320" r="40"/>
+            <path class="line" d="M310 310q30-28 60 0"/>
+            <path class="line" d="M325 335h6m28 0h6M325 352q14 10 28 0"/>
+            <path class="line" d="M340 360V480M340 400L290 440M340 400L390 440M340 480L300 565M340 480L380 565"/>
+          </g>
+        </svg>
+        <div class="dialogue hall-dialog"><span>Are you ready to enter the hall?</span></div>
+        <button class="action" id="enterHall">Enter the hall ✨</button>
+      </section>
+
+      <!-- 6. REVEAL -->
+      <section class="scene reveal-scene" data-step="5">
+        <div class="scene-label">6. The big reveal</div>
+        <div class="reveal-wrap">
+          <div class="sound-note" aria-hidden="true">♪</div>
+          <img class="pookalam" src="assets/gowri-pookalam-face.png" alt="Gowri pookalam made from flowers">
+        </div>
+        <div class="reveal-caption">Gowri… this one is for you. 🌼</div>
+        <button class="action dark" id="postcardBtn">Open your postcard 💌</button>
+      </section>
+
+      <!-- 7. POSTCARD -->
+      <section class="scene postcard-scene" data-step="6">
+        <div class="postcard">
+          <div class="small-flower">🌸</div>
+          <p>A little Onam wish for you</p>
+          <h1>Happy Onam, Gowri! 🌼</h1>
+          <p>I haven’t even seen you in a dhavani yet,<br>but somehow I already know you’re going to look<br>beautiful in it. ❤️</p>
+          <p>I just wanted to make this little Onam surprise especially for you.</p>
+          <strong>Happy Onam, Gowri! ✨</strong>
+        </div>
+        <button class="restart" id="restart">Watch again ↻</button>
+      </section>
+    </main>
+  </div>
+
+  <audio id="voice" preload="auto">
+    <source src="assets/gowri-voice.mp3" type="audio/mpeg">
+  </audio>
+  <script src="script.js"></script>
 </body>
 </html>
