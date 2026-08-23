@@ -1,14 +1,45 @@
-const scenes=[...document.querySelectorAll('.scene')];
-const voice=document.getElementById('voice');
-let current=0;
-function show(i){scenes.forEach((s,n)=>s.classList.toggle('active',n===i));current=i;window.scrollTo(0,0)}
-function playVoice(){voice.currentTime=0;voice.play().catch(()=>{});}
-document.getElementById('enterHome').onclick=()=>show(1);
-document.getElementById('next1').onclick=()=>show(2);
-document.getElementById('next2').onclick=()=>show(3);
-document.getElementById('next3').onclick=()=>show(4);
-document.getElementById('enterHall').onclick=()=>{show(5);setTimeout(playVoice,900)};
-document.getElementById('postcardBtn').onclick=()=>show(6);
-document.getElementById('restart').onclick=()=>{voice.pause();voice.currentTime=0;show(0)};
-voice.addEventListener('ended',()=>show(6));
+const scenes = Array.from(document.querySelectorAll('.scene'));
+const voice = document.getElementById('voice');
+let current = 0;
+
+function show(index) {
+  if (index < 0 || index >= scenes.length) return;
+  scenes.forEach((scene, i) => scene.classList.toggle('active', i === index));
+  current = index;
+  window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+}
+
+function playVoice() {
+  if (!voice) return;
+  voice.currentTime = 0;
+  const promise = voice.play();
+  if (promise && typeof promise.catch === 'function') promise.catch(() => {});
+}
+
+function bind(id, handler) {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('click', handler);
+}
+
+bind('enterHome', () => show(1));
+bind('next1', () => show(2));
+bind('next2', () => show(3));
+bind('next3', () => show(4));
+bind('enterHall', () => {
+  show(5);
+  window.setTimeout(playVoice, 550);
+});
+bind('postcardBtn', () => show(6));
+bind('restart', () => {
+  if (voice) {
+    voice.pause();
+    voice.currentTime = 0;
+  }
+  show(0);
+});
+
+if (voice) {
+  voice.addEventListener('ended', () => show(6));
+}
+
 show(0);
