@@ -32,23 +32,26 @@ function stopMalare() {
 function startMalare() {
   malare.currentTime = 0;
   // Malare is the main music during SC-3.
-  malare.volume = 0.65;
+  malare.volume = 0.32;
   const p = malare.play();
   if (p) p.catch(() => {});
 }
 
-function startGowriVoice() {
-  // Gowri voice starts with SC-2 and continues naturally through the rest of the story.
-  if (gowriVoice.paused) {
+function startGowriVoice(volume = 1.0) {
+  // One continuous Gowri voice track from SC-2 through the end.
+  // Never pause or rewind it during scene changes.
+  gowriVoice.volume = volume;
+  if (gowriVoice.paused && !gowriVoice.ended) {
     const p = gowriVoice.play();
     if (p) p.catch(() => {});
   }
-  gowriVoice.volume = 1.0;
 }
 
 function stopGowriVoice() {
+  // Only used for Replay. Normal scene changes never call this.
   gowriVoice.pause();
   gowriVoice.currentTime = 0;
+  gowriVoice.volume = 1.0;
 }
 
 function resetSceneUI(scene) {
@@ -66,32 +69,31 @@ function showScene(id) {
   next.classList.add('active');
 
   if (id === 'scene2') {
-    startGowriVoice();
+    startGowriVoice(1.0);
     stopMalare();
     later(() => next.querySelector('.popup')?.classList.add('show'), 3000);
     later(() => next.querySelector('.corner-btn')?.classList.add('show'), 3000);
   }
 
   if (id === 'scene3') {
-    // Both tracks play together in SC-3: Malare is louder, Gowri voice is underneath.
-    startGowriVoice();
-    gowriVoice.volume = 0.18;
+    // SC-3: Gowri voice remains clearly audible while Malare plays underneath.
+    startGowriVoice(0.72);
     startMalare();
     later(() => next.querySelector('.popup')?.classList.add('show'), 3000);
     later(() => next.querySelector('.corner-btn')?.classList.add('show'), 5000);
   }
 
   if (id === 'scene4' || id === 'scene5' || id === 'scene6') {
-    startGowriVoice();
+    startGowriVoice(1.0);
     stopMalare();
     later(() => next.querySelector('.popup')?.classList.add('show'), 3000);
     later(() => next.querySelector('.corner-btn')?.classList.add('show'), 3000);
   }
 
   if (id === 'pookalam') {
-    // Keep Gowri voice playing; do not restart it here.
+    // Keep Gowri voice playing continuously; do not restart, pause, or rewind it.
     stopMalare();
-    startGowriVoice();
+    startGowriVoice(1.0);
     gowriVoice.onended = () => showScene('postcard');
     later(() => showScene('postcard'), 15000);
   }
@@ -133,6 +135,7 @@ sc1Video.addEventListener('error', startBook);
 bookVideo.addEventListener('timeupdate', () => {
   if (bookVideo.currentTime >= BOOK_GREEN_TIME && !bookPausedAtGreen) {
     bookPausedAtGreen = true;
+    bookVideo.currentTime = BOOK_GREEN_TIME;
     bookVideo.pause();
     bookTitle.classList.add('show');
     bookStart.classList.add('show');

@@ -29,3 +29,13 @@ Open door -> smaller Gowri pookalam -> Gowri voice -> animated postcard.
 
 ### SC-3 audio
 During SC-3, `malare-bgm.mp3` is the louder/main track and `gowri-voice.mp3` continues underneath at low volume. Outside SC-3, Gowri voice returns to normal volume.
+
+
+## v8 fix
+The Animated Book video is forced to fill the book stage at 16:9 so browser zoom cannot make the green page and the For Gowri overlay drift apart. The For Gowri design is clipped to the actual green-page area.
+
+
+### Latest corrections (v10)
+- The real green page from Animated Book.mp4 is never replaced by a CSS green rectangle. The For Gowri text is overlaid only inside the actual page area.
+- Gowri voice starts once at SC-2 and is never paused/rewound by normal scene changes; only Replay resets it.
+- In SC-3, Gowri voice is 72% and Malare BGM is 32%.
