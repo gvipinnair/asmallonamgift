@@ -1,14 +1,17 @@
-const scenes = [...document.querySelectorAll('.scene')];
-const sc1Video = document.getElementById('sc1Video');
-const bookVideo = document.getElementById('bookVideo');
-const bookTitle = document.getElementById('bookTitle');
-const bookStart = document.getElementById('bookStart');
-const gowriVoice = document.getElementById('gowriVoice');
-const gowriVoice2 = document.getElementById('voice2');
+const scenes = [...document.querySelectorAll(".scene")];
+
+const sc1Video = document.getElementById("sc1Video");
+const bookVideo = document.getElementById("bookVideo");
+const bookTitle = document.getElementById("bookTitle");
+const bookStart = document.getElementById("bookStart");
+
+const gowriVoice = document.getElementById("gowriVoice");
+const gowriVoice2 = document.getElementById("voice2");
 
 const timers = new Set();
 const BOOK_GREEN_TIME = 8.5;
 let bookPausedAtGreen = false;
+let voice2Started = false;
 
 function later(fn, ms) {
   const id = setTimeout(() => {
@@ -16,7 +19,6 @@ function later(fn, ms) {
     fn();
   }, ms);
   timers.add(id);
-  return id;
 }
 
 function clearTimers() {
@@ -24,140 +26,202 @@ function clearTimers() {
   timers.clear();
 }
 
+function stopAllAudio() {
+  gowriVoice.pause();
+  gowriVoice2.pause();
 
+  gowriVoice.currentTime = 0;
+  gowriVoice2.currentTime = 0;
 
-function startGowriVoice(volume = 1.0) {
-  gowriVoice.volume = volume;
-  if (gowriVoice.paused && !gowriVoice.ended) {
-    const p = gowriVoice.play();
-    if (p) p.catch(() => {});
+  gowriVoice.volume = 1;
+  gowriVoice2.volume = 1;
+
+  voice2Started = false;
+}
+
+/*
+ * Voice 1 starts once, when the user clicks "Shall we start?".
+ * It continues through SC-2, SC-3, SC-4, SC-5, SC-6 and pookalam.
+ * It is NEVER restarted when changing scenes.
+ */
+function startGowriVoice() {
+  if (gowriVoice.ended) return;
+
+  gowriVoice.volume = 1;
+
+  const p = gowriVoice.play();
+  if (p) {
+    p.catch(err => console.warn("Gowri voice 1 play failed:", err));
   }
 }
 
-function stopGowriVoice() {
-  gowriVoice.pause();
-  gowriVoice.currentTime = 0;
-  gowriVoice.volume = 1.0;
-  gowriVoice2.pause();
+/*
+ * Voice 2 starts ONLY after voice 1 naturally ends.
+ */
+function startVoice2() {
+  if (voice2Started) return;
+
+  voice2Started = true;
   gowriVoice2.currentTime = 0;
-  gowriVoice2.volume = 1.0;
+  gowriVoice2.volume = 1;
+
+  const p = gowriVoice2.play();
+  if (p) {
+    p.catch(err => console.warn("Gowri voice 2 play failed:", err));
+  }
 }
 
-function playVoice2() {
-  gowriVoice2.currentTime = 0;
-  gowriVoice2.volume = 1.0;
-  const p = gowriVoice2.play();
-  if (p) p.catch((err) => console.warn("gowri-voice-2 could not play:", err));
-}
+/*
+ * Absolutely no Malare audio is created or played anywhere.
+ */
+gowriVoice.addEventListener("ended", startVoice2);
+
+gowriVoice2.addEventListener("ended", () => {
+  showScene("postcard");
+});
 
 function resetSceneUI(scene) {
-  scene.querySelectorAll('.popup, .corner-btn').forEach(el => el.classList.remove('show'));
+  scene.querySelectorAll(".popup, .corner-btn")
+    .forEach(el => el.classList.remove("show"));
 }
 
 function showScene(id) {
   clearTimers();
-  scenes.forEach(s => {
-    s.classList.remove('active');
-    resetSceneUI(s);
+
+  scenes.forEach(scene => {
+    scene.classList.remove("active");
+    resetSceneUI(scene);
   });
 
   const next = document.getElementById(id);
-  next.classList.add('active');
+  if (!next) return;
 
-  if (id === 'scene2') {
-    startGowriVoice(1.0);
-    later(() => next.querySelector('.popup')?.classList.add('show'), 3000);
-    later(() => next.querySelector('.corner-btn')?.classList.add('show'), 3000);
+  next.classList.add("active");
+
+  if (id === "scene2") {
+    // Voice is already started by the user's button click.
+    later(() => next.querySelector(".popup")?.classList.add("show"), 3000);
+    later(() => next.querySelector(".corner-btn")?.classList.add("show"), 3000);
   }
 
-  if (id === 'scene3') {
-    startGowriVoice(0.72);
-    later(() => next.querySelector('.popup')?.classList.add('show'), 3000);
-    later(() => next.querySelector('.corner-btn')?.classList.add('show'), 5000);
+  if (id === "scene3") {
+    // Keep voice 1 loud and continuous.
+    gowriVoice.volume = 1;
+    later(() => next.querySelector(".popup")?.classList.add("show"), 3000);
+    later(() => next.querySelector(".corner-btn")?.classList.add("show"), 5000);
   }
 
-  if (id === 'scene4' || id === 'scene5' || id === 'scene6') {
-    startGowriVoice(1.0);
-    later(() => next.querySelector('.popup')?.classList.add('show'), 3000);
-    later(() => next.querySelector('.corner-btn')?.classList.add('show'), 3000);
+  if (id === "scene4" || id === "scene5" || id === "scene6") {
+    gowriVoice.volume = 1;
+    later(() => next.querySelector(".popup")?.classList.add("show"), 3000);
+    later(() => next.querySelector(".corner-btn")?.classList.add("show"), 3000);
   }
 
-  if (id === 'pookalam') {
-    // Keep Gowri voice playing continuously; do not restart, pause, or rewind it.
-    startGowriVoice(1.0);
-}
+  if (id === "pookalam") {
+    gowriVoice.volume = 1;
+    // Do NOT call play() here. Voice 1 is already playing.
+  }
 
   window.scrollTo(0, 0);
 }
 
 function resetBook() {
   clearTimers();
+
   bookPausedAtGreen = false;
-  bookTitle.classList.remove('show');
-  bookStart.classList.remove('show');
+  bookTitle.classList.remove("show");
+  bookStart.classList.remove("show");
+
   bookVideo.pause();
   bookVideo.currentTime = 0;
 }
 
 function startBook() {
-  showScene('bookScene');
+  showScene("bookScene");
+
   bookPausedAtGreen = false;
-  bookTitle.classList.remove('show');
-  bookStart.classList.remove('show');
+  bookTitle.classList.remove("show");
+  bookStart.classList.remove("show");
+
   bookVideo.currentTime = 0;
+
   const p = bookVideo.play();
-  if (p) p.catch(() => {});
+  if (p) p.catch(err => console.warn("Book video play failed:", err));
 }
 
-// Natural voice handoff: voice 2 starts exactly when voice 1 finishes.
-gowriVoice.addEventListener('ended', () => {
-  playVoice2();
-});
+window.addEventListener("load", () => {
+  stopAllAudio();
 
-gowriVoice2.addEventListener('ended', () => {
-  showScene('postcard');
-});
+  showScene("scene1");
 
-window.addEventListener('load', () => {
-  showScene('scene1');
   sc1Video.currentTime = 0;
+
   const p = sc1Video.play();
-  if (p) p.catch(() => {});
+  if (p) p.catch(err => console.warn("SC-1 video play failed:", err));
 });
 
-/* SC-1 video finishes -> Animated Book starts */
-sc1Video.addEventListener('ended', startBook);
-sc1Video.addEventListener('error', startBook);
+/* SC-1 finishes -> Animated Book */
+sc1Video.addEventListener("ended", startBook);
+sc1Video.addEventListener("error", startBook);
 
-/* Animated Book pauses on its green page */
-bookVideo.addEventListener('timeupdate', () => {
+/* Animated Book pauses at the green-page frame */
+bookVideo.addEventListener("timeupdate", () => {
   if (bookVideo.currentTime >= BOOK_GREEN_TIME && !bookPausedAtGreen) {
     bookPausedAtGreen = true;
+
     bookVideo.currentTime = BOOK_GREEN_TIME;
     bookVideo.pause();
-    bookTitle.classList.add('show');
-    bookStart.classList.add('show');
+
+    bookTitle.classList.add("show");
+    bookStart.classList.add("show");
   }
 });
 
-bookVideo.addEventListener('error', () => {
-  bookTitle.classList.add('show');
-  bookStart.classList.add('show');
+bookVideo.addEventListener("error", () => {
+  bookTitle.classList.add("show");
+  bookStart.classList.add("show");
 });
 
-bookStart.addEventListener('click', () => showScene('scene2'));
-document.getElementById('to3').addEventListener('click', () => showScene('scene3'));
-document.getElementById('to4').addEventListener('click', () => showScene('scene4'));
-document.getElementById('to5').addEventListener('click', () => showScene('scene5'));
-document.getElementById('to6').addEventListener('click', () => showScene('scene6'));
-document.getElementById('openDoor').addEventListener('click', () => showScene('pookalam'));
+/*
+ * IMPORTANT:
+ * This is the user gesture that starts Gowri voice.
+ * Browser autoplay restrictions therefore allow the audio to start.
+ */
+bookStart.addEventListener("click", () => {
+  startGowriVoice();
+  showScene("scene2");
+});
 
-document.getElementById('replay').addEventListener('click', () => {
-  stopGowriVoice();
+document.getElementById("to3").addEventListener("click", () => {
+  showScene("scene3");
+});
+
+document.getElementById("to4").addEventListener("click", () => {
+  showScene("scene4");
+});
+
+document.getElementById("to5").addEventListener("click", () => {
+  showScene("scene5");
+});
+
+document.getElementById("to6").addEventListener("click", () => {
+  showScene("scene6");
+});
+
+document.getElementById("openDoor").addEventListener("click", () => {
+  showScene("pookalam");
+});
+
+document.getElementById("replay").addEventListener("click", () => {
+  stopAllAudio();
+
   sc1Video.pause();
   sc1Video.currentTime = 0;
+
   resetBook();
-  showScene('scene1');
+
+  showScene("scene1");
+
   const p = sc1Video.play();
-  if (p) p.catch(() => {});
+  if (p) p.catch(err => console.warn("Replay SC-1 play failed:", err));
 });

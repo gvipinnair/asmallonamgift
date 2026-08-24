@@ -11,15 +11,17 @@
 </head>
 <body>
 <main id="app">
-  <!-- SC-1: Actual SC-1 video -->
+
   <section id="scene1" class="scene active video-scene">
-    <video id="sc1Video" class="full-video" src="assets/sc-1.mp4" autoplay playsinline preload="auto"></video>
+    <video id="sc1Video" class="full-video" src="assets/sc-1.mp4"
+           autoplay playsinline preload="auto"></video>
   </section>
 
-  <!-- Animated Book: plays after SC-1, then pauses on the green page -->
   <section id="bookScene" class="scene book-scene">
     <div class="book-stage">
-      <video id="bookVideo" src="assets/Animated Book.mp4" playsinline preload="auto"></video>
+      <video id="bookVideo" src="assets/Animated Book.mp4"
+             playsinline preload="auto"></video>
+
       <div id="bookTitle" class="book-title-overlay">
         <div class="book-page-content">
           <div class="book-flower">✿</div>
@@ -28,11 +30,11 @@
           <div class="book-subtitle">Someone has been waiting to welcome you...</div>
         </div>
       </div>
+
       <button id="bookStart" class="book-start">Shall we start? ✨</button>
     </div>
   </section>
 
-  <!-- SC-2 -->
   <section id="scene2" class="scene image-scene">
     <div class="image-backdrop" style="background-image:url('assets/sc-2.png')"></div>
     <img class="scene-media" src="assets/sc-2.png" alt="">
@@ -40,7 +42,6 @@
     <button id="to3" class="corner-btn">There is a person waiting ✨</button>
   </section>
 
-  <!-- SC-3 -->
   <section id="scene3" class="scene image-scene">
     <div class="image-backdrop" style="background-image:url('assets/sc-3.png')"></div>
     <img class="scene-media" src="assets/sc-3.png" alt="">
@@ -48,7 +49,6 @@
     <button id="to4" class="corner-btn">I brought a person with me →</button>
   </section>
 
-  <!-- SC-4 -->
   <section id="scene4" class="scene image-scene">
     <div class="image-backdrop" style="background-image:url('assets/sc-4.png')"></div>
     <img class="scene-media" src="assets/sc-4.png" alt="">
@@ -56,7 +56,6 @@
     <button id="to5" class="corner-btn">Continue →</button>
   </section>
 
-  <!-- SC-5 -->
   <section id="scene5" class="scene image-scene">
     <div class="image-backdrop" style="background-image:url('assets/sc-5.png')"></div>
     <img class="scene-media" src="assets/sc-5.png" alt="">
@@ -64,7 +63,6 @@
     <button id="to6" class="corner-btn">Check the door →</button>
   </section>
 
-  <!-- SC-6 -->
   <section id="scene6" class="scene image-scene">
     <div class="image-backdrop" style="background-image:url('assets/sc-6.png')"></div>
     <img class="scene-media" src="assets/sc-6.png" alt="">
@@ -72,13 +70,11 @@
     <button id="openDoor" class="corner-btn">Open the door ✨</button>
   </section>
 
-  <!-- Pookalam + Gowri voice -->
   <section id="pookalam" class="scene pookalam-scene">
     <div class="pookalam-glow"></div>
     <img src="assets/gowri-pookalam-face.png" alt="Gowri pookalam">
   </section>
 
-  <!-- Postcard -->
   <section id="postcard" class="scene postcard-scene">
     <article class="postcard">
       <div class="postcard-flower">✿</div>
@@ -90,9 +86,13 @@
       <button id="replay" class="replay-btn">Watch again ↻</button>
     </article>
   </section>
+
 </main>
+
+<!-- ONLY these two audio files are used. There is NO Malare audio. -->
 <audio id="gowriVoice" src="assets/gowri-voice.mp3" preload="auto"></audio>
 <audio id="voice2" src="assets/gowri-voice-2.mp3" preload="auto"></audio>
+
 <script src="script.js"></script>
 </body>
 </html>
