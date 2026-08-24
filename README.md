@@ -1,20 +1,16 @@
-# Vipin Onam Surprise – 9-scene version
+# Gowri Onam Surprise — FINAL
 
-The supplied panel images are used as the visual design.
+Exact requested sequence:
 
-Scene order:
-1. Opening
-2. Door / Come inside
-3. Mouse + cat + children / Sadya
-4. You look so beautiful today
-5. Mahabali walks in
-6. Mahabali raises his hand + colorful glass bangles
-7. Ready to enter the hall
-8. Hall reveal – `gowri-pookalam-face.png` + `gowri-voice.mp3`
-9. Original postcard
+1. `sc-1.mp4` — actual VideoAI anime book-opening video
+2. `gowri-intro.png` — supplied For Gowri image
+3. `Shall we start?` button
+4. `sc-2.png` — popup + There is a person waiting
+5. `sc-3.png` — popup + Malare BGM in background
+6. `sc-4.png` — shown after the SC-3 button, then automatically moves to SC-5
+7. `sc-5.png` — glass bangles popup + Check the door
+8. `sc-6.png` — Are you ready to open the door? + Open the door
+9. `gowri-pookalam-face.png` — pookalam alone + `gowri-voice.mp3`
+10. Postcard
 
-Important:
-- The visible buttons in panels 1–7 and 9 are already part of the supplied images.
-- The HTML uses invisible click areas over those buttons, so no duplicate buttons appear.
-- Put `gowri-pookalam-face.png` and `gowri-voice.mp3` inside `assets/`.
-- The page uses a short movie-like slide transition between scenes.
+`sc-7.png` is deliberately NOT used, because the requested flow ends at SC-6.
