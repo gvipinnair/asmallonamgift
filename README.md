@@ -39,3 +39,7 @@ The Animated Book video is forced to fill the book stage at 16:9 so browser zoom
 - The real green page from Animated Book.mp4 is never replaced by a CSS green rectangle. The For Gowri text is overlaid only inside the actual page area.
 - Gowri voice starts once at SC-2 and is never paused/rewound by normal scene changes; only Replay resets it.
 - In SC-3, Gowri voice is 72% and Malare BGM is 32%.
+
+
+## Voice handoff
+At the pookalam reveal, `gowri-voice.mp3` plays first. When it naturally finishes, `gowri-voice-2.mp3` starts automatically without a gap/restart. The postcard appears after voice 2 finishes.
