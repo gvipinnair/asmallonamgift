@@ -9,7 +9,6 @@
 
 ## Scene messages
 - SC-2 popup: after 3 seconds.
-- SC-3 Malare BGM starts immediately; popup after 3 seconds; button after 5 seconds.
 - SC-4 popup/button after 3 seconds.
 - SC-5 popup/button after 3 seconds.
 - SC-6 popup after 3 seconds: `നീ റെഡിയാണോ ഓണപ്പൂക്കളം കാണാൻ?`
@@ -23,12 +22,10 @@ Open door -> smaller Gowri pookalam -> Gowri voice -> animated postcard.
 
 ### Audio update
 - `gowri-voice.mp3` starts when SC-2 begins and continues through SC-3, SC-4, SC-5, SC-6, pookalam and postcard without restarting.
-- During SC-3, `malare-bgm.mp3` plays underneath at low volume (20%), while Gowri voice remains louder.
 - The pookalam is displayed as a circular floral portrait rather than a square image.
 
 
 ### SC-3 audio
-During SC-3, `malare-bgm.mp3` is the louder/main track and `gowri-voice.mp3` continues underneath at low volume. Outside SC-3, Gowri voice returns to normal volume.
 
 
 ## v8 fix
@@ -38,8 +35,10 @@ The Animated Book video is forced to fill the book stage at 16:9 so browser zoom
 ### Latest corrections (v10)
 - The real green page from Animated Book.mp4 is never replaced by a CSS green rectangle. The For Gowri text is overlaid only inside the actual page area.
 - Gowri voice starts once at SC-2 and is never paused/rewound by normal scene changes; only Replay resets it.
-- In SC-3, Gowri voice is 72% and Malare BGM is 32%.
 
 
 ## Voice handoff
 At the pookalam reveal, `gowri-voice.mp3` plays first. When it naturally finishes, `gowri-voice-2.mp3` starts automatically without a gap/restart. The postcard appears after voice 2 finishes.
+
+## Voice sequence
+`gowri-voice.mp3` plays first. The instant it naturally ends, `gowri-voice-2.mp3` starts. When voice 2 ends, the postcard appears.
