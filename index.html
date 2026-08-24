@@ -11,13 +11,15 @@
 </head>
 <body>
 <main id="app">
-  <!-- SC-1: Animated Book. It pauses on its actual green page. -->
-  <section id="scene1" class="scene active book-scene">
+  <!-- SC-1: Actual SC-1 video -->
+  <section id="scene1" class="scene active video-scene">
+    <video id="sc1Video" class="full-video" src="assets/sc-1.mp4" autoplay playsinline preload="auto"></video>
+  </section>
+
+  <!-- Animated Book: plays after SC-1, then pauses on the green page -->
+  <section id="bookScene" class="scene book-scene">
     <div class="book-stage">
-      <video id="sc1Video" src="assets/Animated Book.mp4" autoplay playsinline preload="auto"></video>
-
-
-      <!-- These sit directly on the green page in the video -->
+      <video id="bookVideo" src="assets/Animated Book.mp4" playsinline preload="auto"></video>
       <div id="bookTitle" class="book-title-overlay">
         <div class="book-flower">✿</div>
         <div class="book-eyebrow">A LITTLE ONAM SURPRISE</div>
@@ -64,7 +66,7 @@
   <section id="scene6" class="scene image-scene">
     <div class="image-backdrop" style="background-image:url('assets/sc-6.png')"></div>
     <img class="scene-media" src="assets/sc-6.png" alt="">
-    <div class="popup">Are you ready to open the door? 🚪</div>
+    <div class="popup">നീ റെഡിയാണോ ഓണപ്പൂക്കളം കാണാൻ?</div>
     <button id="openDoor" class="corner-btn">Open the door ✨</button>
   </section>
 
