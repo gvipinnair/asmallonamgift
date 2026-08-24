@@ -1,16 +1,54 @@
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#111;font-family:Arial,sans-serif}.scene{position:fixed;inset:0;width:100%;height:100dvh;display:none;overflow:hidden}.scene.active{display:flex;animation:in .55s ease both}@keyframes in{from{opacity:0}to{opacity:1}}.media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.video-scene{background:#f7eedb;align-items:center;justify-content:center}.intro-scene{align-items:center;justify-content:center;background:#f7eedb}.intro-scene .media{object-fit:cover}.main-btn{position:absolute;left:50%;top:83%;transform:translate(-50%,-50%);border:0;border-radius:999px;padding:15px 32px;background:linear-gradient(135deg,#e0b34f,#aa741b);color:white;font-size:18px;cursor:pointer;box-shadow:0 12px 30px rgba(80,50,10,.25)}.main-btn:hover{transform:translate(-50%,-53%)}.image-scene{background:#111;align-items:center;justify-content:center}.popup{position:absolute;z-index:4;top:8%;left:50%;transform:translateX(-50%);width:min(86%,720px);padding:16px 24px;border-radius:22px;text-align:center;background:rgba(255,255,255,.94);color:#174a38;font-family:Georgia,serif;font-size:clamp(22px,3vw,34px);box-shadow:0 18px 45px rgba(0,0,0,.3);animation:pop .55s ease both}@keyframes pop{from{opacity:0;transform:translate(-50%,-15px) scale(.95)}to{opacity:1;transform:translate(-50%,0) scale(1)}}.corner-btn{position:absolute;z-index:5;left:25px;bottom:25px;border:0;border-radius:15px;padding:13px 20px;background:linear-gradient(135deg,#e0b34f,#aa741b);color:#fff;font-size:16px;cursor:pointer;box-shadow:0 10px 28px rgba(0,0,0,.25)}.pookalam-scene{align-items:center;justify-content:center;background:#fff2bd}.pookalam-scene:after{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(255,255,220,.7),rgba(255,215,80,.15) 45%,rgba(80,40,0,.25));pointer-events:none}.pookalam-scene img{position:relative;z-index:2;width:min(78vw,680px);height:min(78vw,680px);object-fit:contain;border-radius:50%;animation:reveal .9s ease both}@keyframes reveal{from{opacity:0;transform:scale(.78)}to{opacity:1;transform:scale(1)}}.postcard-scene{align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#f4e0ae,#dbe6d0)}.postcard{position:relative;width:min(92vw,680px);padding:55px;background:#fffaf0;border:10px solid white;outline:1px solid #cba45c;box-shadow:0 28px 75px rgba(50,35,12,.28);transform:rotate(-1deg)}.small-title{letter-spacing:4px;font-size:11px;color:#a06f20;font-weight:bold}.postcard h1{font-family:Georgia,serif;color:#174a38;font-size:clamp(38px,7vw,64px);line-height:.95;margin:12px 0 25px}.postcard p{color:#5e503f;line-height:1.8;font-size:17px}.signature{color:#9c6130;font-family:Georgia,serif;font-size:24px}.stamp{position:absolute;top:18px;right:18px;width:62px;height:62px;display:grid;place-items:center;text-align:center;border:2px dashed #b58b42;color:#8d682d;font-size:10px;transform:rotate(5deg)}@media(max-width:600px){.main-btn{top:83%;font-size:16px;padding:13px 24px}.popup{top:6%;font-size:22px;width:90%}.corner-btn{left:16px;right:16px;bottom:16px;text-align:center}.postcard{padding:35px 28px}.postcard p{font-size:14px}}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--green:#174d3b;--gold:#c58d25;--gold2:#e3b34e;--cream:#fffaf0}
+html,body{width:100%;height:100%;overflow:hidden;background:#17130e}
+body{font-family:Poppins,sans-serif;color:#2d2418}
+button{font:inherit}
+.scene{position:fixed;inset:0;display:none;width:100%;height:100dvh;overflow:hidden}
+.scene.active{display:flex;animation:sceneIn .65s ease both}
+@keyframes sceneIn{from{opacity:0}to{opacity:1}}
 
+/* BOOK */
+.book-scene{align-items:center;justify-content:center;background:#241a10}
+.book-stage{position:relative;width:min(100vw,177.7778dvh);height:min(100dvh,56.25vw);max-width:100vw;max-height:100dvh;aspect-ratio:16/9;overflow:hidden}
+.book-stage:before{content:"";position:absolute;inset:0;background:url('assets/Animated Book.mp4');background-size:cover;filter:blur(22px);opacity:.35}
+#sc1Video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#241a10}
+.book-greeting{position:absolute;z-index:5;left:50%;top:12%;transform:translate(-50%,-18px) scale(.96);width:min(76%,760px);padding:16px 28px;border-radius:24px;text-align:center;background:rgba(255,255,255,.94);box-shadow:0 18px 45px rgba(0,0,0,.28);font-family:"Noto Sans Malayalam",Poppins,sans-serif;font-size:clamp(22px,3vw,38px);color:var(--green);opacity:0;transition:.55s ease}
+.book-greeting.show{opacity:1;transform:translate(-50%,0) scale(1)}
+/* The green page in the supplied 1280x720 video is approximately x=50.2%, y=11.1%, w=32.1%, h=78.1%. */
+.book-title-overlay{position:absolute;z-index:4;left:50.2%;top:11.1%;width:32.1%;height:78.1%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fffaf0;pointer-events:none;opacity:0;transform:scale(.96);transition:.6s ease;padding:7% 5%}
+.book-title-overlay.show{opacity:1;transform:scale(1)}
+.book-flower{font-size:clamp(22px,3.5vw,42px);color:#f0d47c;margin-bottom:3%}
+.book-eyebrow{font-size:clamp(6px,.8vw,12px);letter-spacing:3px;font-weight:600;color:#ead18a;margin-bottom:4%}
+.book-name{font-family:"Cormorant Garamond",serif;font-weight:700;font-size:clamp(34px,5vw,72px);line-height:.85;text-shadow:0 2px 8px rgba(0,0,0,.35)}
+.book-subtitle{margin-top:6%;font-size:clamp(8px,1vw,15px);line-height:1.35;color:#fff7df;max-width:92%;text-shadow:0 2px 6px rgba(0,0,0,.35)}
+.book-start{position:absolute;z-index:7;left:66.2%;top:79%;transform:translate(-50%,20px);opacity:0;pointer-events:none;border:0;border-radius:999px;padding:12px 25px;color:#fff;background:linear-gradient(135deg,#e4b84f,#a86e15);box-shadow:0 12px 28px rgba(0,0,0,.28);font-size:clamp(12px,1.25vw,18px);cursor:pointer;transition:.55s ease}
+.book-start.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
 
-/* SC-3: button appears 5 seconds after Malare BGM starts */
-.delayed-btn {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(12px);
-  transition: opacity .45s ease, transform .45s ease;
-}
+/* IMAGE SCENES */
+.image-scene{align-items:center;justify-content:center;background:#15120e}
+.image-backdrop{position:absolute;inset:-25px;background-position:center;background-size:cover;filter:blur(28px) brightness(.65);transform:scale(1.08);opacity:.9}
+.scene-media{position:relative;z-index:2;width:100%;height:100%;object-fit:contain;display:block}
+.popup{position:absolute;z-index:5;left:50%;top:8%;transform:translate(-50%,-18px) scale(.95);width:min(78%,900px);padding:17px 28px;border-radius:24px;background:rgba(255,255,255,.94);box-shadow:0 18px 45px rgba(0,0,0,.28);text-align:center;color:var(--green);font-family:"Cormorant Garamond",serif;font-weight:600;font-size:clamp(24px,3vw,40px);line-height:1.1;opacity:0;pointer-events:none;transition:.55s cubic-bezier(.2,.8,.2,1)}
+.popup.show{opacity:1;transform:translate(-50%,0) scale(1)}
+.corner-btn{position:absolute;z-index:8;right:32px;bottom:30px;border:0;border-radius:17px;padding:17px 27px;min-width:245px;color:#fff;background:linear-gradient(135deg,#1d7057,#104331);box-shadow:0 14px 30px rgba(0,0,0,.3);font-weight:600;font-size:17px;cursor:pointer;opacity:0;transform:translateY(18px);pointer-events:none;transition:.5s ease}
+.corner-btn.show{opacity:1;transform:translateY(0);pointer-events:auto}
+.corner-btn:hover{transform:translateY(-3px)}
 
-.delayed-btn.visible {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
+/* POOKALAM */
+.pookalam-scene{align-items:center;justify-content:center;background:radial-gradient(circle,#fff8d8,#e2b74d 48%,#6e4516)}
+.pookalam-glow{position:absolute;width:min(85vw,720px);aspect-ratio:1;border-radius:50%;background:rgba(255,245,160,.42);filter:blur(38px)}
+.pookalam-scene img{position:relative;z-index:2;width:min(62vw,520px);height:min(62vw,520px);object-fit:contain;animation:pookIn 1s cubic-bezier(.2,.8,.2,1) both;filter:drop-shadow(0 20px 40px rgba(50,30,5,.28))}
+@keyframes pookIn{from{opacity:0;transform:scale(.78) rotate(-4deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+
+/* POSTCARD */
+.postcard-scene{align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 25%,#fffdf4,#e4eddc 48%,#d1b46d)}
+.postcard{position:relative;width:min(88vw,720px);padding:clamp(34px,5vw,58px);background:#fffaf0;border:10px solid #fff;outline:1px solid #c9a457;box-shadow:0 30px 80px rgba(48,32,9,.28);text-align:left;animation:cardIn 1s cubic-bezier(.2,.8,.2,1) both}
+@keyframes cardIn{from{opacity:0;transform:translateY(35px) rotate(-2deg) scale(.94)}to{opacity:1;transform:translateY(0) rotate(-.7deg) scale(1)}}
+.postcard:after{content:"";position:absolute;inset:13px;border:1px dashed rgba(160,120,45,.35);pointer-events:none}
+.postcard-flower{font-size:30px;color:#c99837;margin-bottom:5px}
+.small-title{text-transform:uppercase;letter-spacing:4px;font-size:11px;font-weight:600;color:#aa7825}
+.postcard h1{font-family:"Cormorant Garamond",serif;color:var(--green);font-size:clamp(42px,6vw,70px);line-height:.95;margin:10px 0 24px}
+.postcard p:not(.signature){font-size:clamp(15px,1.6vw,18px);line-height:1.75;color:#5d5040;margin-bottom:14px}
+.signature{font-family:"Cormorant Garamond",serif;color:#9b6822;font-size:25px;margin-top:20px}
+.replay-btn{position:relative;z-index:4;margin-top:20px;border:1px solid #bd8b36;border-radius:999px;background:#fff8e9;color:#95671f;padding:11px 22px;cursor:pointer}
+@media(max-width:700px){.book-greeting{width:88%;font-size:22px;padding:12px 16px}.popup{width:90%;font-size:24px;padding:14px 16px;top:6%}.corner-btn{right:15px;bottom:15px;left:15px;width:auto;min-width:0;font-size:16px}.book-name{font-size:36px}.book-subtitle{font-size:8px}.book-start{padding:10px 17px}.pookalam-scene img{width:72vw;height:72vw}.postcard{padding:30px 26px}}

@@ -1,16 +1,18 @@
-# Gowri Onam Surprise — FINAL
+# Gowri Onam Surprise — v4
 
-Exact requested sequence:
+## Book sequence
+- The supplied `Animated Book.mp4` is the opening.
+- At exactly 3 seconds of the video, the Malayalam popup appears: `ഗൗരി, നീ റെഡിയാണോ? 👋😊`
+- The video is allowed to reach the fully-open green page and pauses there.
+- In the supplied video, the green page is fully visible at about 8.5 seconds, so the script pauses at `8.5s` rather than 7.0s (at 7.0s the green page is not yet open in this actual file).
+- `For Gowri` is rendered directly over that green page, with the `Shall we start? ✨` button on the page.
 
-1. `sc-1.mp4` — actual VideoAI anime book-opening video
-2. `gowri-intro.png` — supplied For Gowri image
-3. `Shall we start?` button
-4. `sc-2.png` — popup + There is a person waiting
-5. `sc-3.png` — popup + Malare BGM in background
-6. `sc-4.png` — shown after the SC-3 button, then automatically moves to SC-5
-7. `sc-5.png` — glass bangles popup + Check the door
-8. `sc-6.png` — Are you ready to open the door? + Open the door
-9. `gowri-pookalam-face.png` — pookalam alone + `gowri-voice.mp3`
-10. Postcard
+## Main story
+For Gowri -> Shall we start -> SC-2 -> SC-3 + Malare -> SC-4 -> SC-5 -> SC-6 -> Open the door -> Gowri pookalam + voice -> postcard.
 
-`sc-7.png` is deliberately NOT used, because the requested flow ends at SC-6.
+All SC popups appear 3 seconds after entering their scene. SC-3's action button appears after 5 seconds, as requested.
+
+
+### SC-1 audio
+The Animated Book video is played with its original audio enabled. The SC-1 voice/background audio is not muted or replaced.
+The Malayalam popup at 00:00:03 has been removed.

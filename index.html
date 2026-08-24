@@ -4,68 +4,86 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>For Gowri 🌼</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <main id="app">
-  <!-- 1: Actual VideoAI sc-1.mp4 -->
-  <section id="scene1" class="scene active video-scene">
-    <video id="sc1Video" class="media" src="assets/sc-1.mp4" autoplay muted playsinline preload="auto"></video>
+  <!-- SC-1: Animated Book. It pauses on its actual green page. -->
+  <section id="scene1" class="scene active book-scene">
+    <div class="book-stage">
+      <video id="sc1Video" src="assets/Animated Book.mp4" autoplay playsinline preload="auto"></video>
+
+
+      <!-- These sit directly on the green page in the video -->
+      <div id="bookTitle" class="book-title-overlay">
+        <div class="book-flower">✿</div>
+        <div class="book-eyebrow">A LITTLE ONAM SURPRISE</div>
+        <div class="book-name">For Gowri</div>
+        <div class="book-subtitle">Someone has been waiting to welcome you...</div>
+      </div>
+      <button id="bookStart" class="book-start">Shall we start? ✨</button>
+    </div>
   </section>
 
-  <!-- 2: User supplied For Gowri image -->
-  <section id="intro" class="scene intro-scene">
-    <img class="media" src="assets/gowri-intro.png" alt="For Gowri">
-    <button id="startBtn" class="main-btn">Shall we start? ✨</button>
-  </section>
-
-  <!-- 3: Actual sc-2 -->
+  <!-- SC-2 -->
   <section id="scene2" class="scene image-scene">
-    <img class="media" src="assets/sc-2.png" alt="">
+    <div class="image-backdrop" style="background-image:url('assets/sc-2.png')"></div>
+    <img class="scene-media" src="assets/sc-2.png" alt="">
     <div class="popup">We are ready to receive you for the Onam. 🌼</div>
     <button id="to3" class="corner-btn">There is a person waiting ✨</button>
   </section>
 
-  <!-- 4: Actual sc-3 + Malare BGM -->
+  <!-- SC-3 -->
   <section id="scene3" class="scene image-scene">
-    <img class="media" src="assets/sc-3.png" alt="">
+    <div class="image-backdrop" style="background-image:url('assets/sc-3.png')"></div>
+    <img class="scene-media" src="assets/sc-3.png" alt="">
     <div class="popup">Gowri, you look so beautiful today. ❤️</div>
-    <button id="to4" class="corner-btn delayed-btn">I brought a person with me →</button>
+    <button id="to4" class="corner-btn">I brought a person with me →</button>
   </section>
 
-  <!-- 5: Actual sc-4 -->
+  <!-- SC-4 -->
   <section id="scene4" class="scene image-scene">
-    <img class="media" src="assets/sc-4.png" alt="">
+    <div class="image-backdrop" style="background-image:url('assets/sc-4.png')"></div>
+    <img class="scene-media" src="assets/sc-4.png" alt="">
+    <div class="popup">And there is one more little surprise waiting for you… 🌸</div>
+    <button id="to5" class="corner-btn">Continue →</button>
   </section>
 
-  <!-- 6: Actual sc-5 -->
+  <!-- SC-5 -->
   <section id="scene5" class="scene image-scene">
-    <img class="media" src="assets/sc-5.png" alt="">
+    <div class="image-backdrop" style="background-image:url('assets/sc-5.png')"></div>
+    <img class="scene-media" src="assets/sc-5.png" alt="">
     <div class="popup">Vipin told me that you like glass bangles, so I brought them for you. 💚</div>
     <button id="to6" class="corner-btn">Check the door →</button>
   </section>
 
-  <!-- 7: Actual sc-6 -->
+  <!-- SC-6 -->
   <section id="scene6" class="scene image-scene">
-    <img class="media" src="assets/sc-6.png" alt="">
+    <div class="image-backdrop" style="background-image:url('assets/sc-6.png')"></div>
+    <img class="scene-media" src="assets/sc-6.png" alt="">
     <div class="popup">Are you ready to open the door? 🚪</div>
     <button id="openDoor" class="corner-btn">Open the door ✨</button>
   </section>
 
-  <!-- 8: Pookalam only -->
+  <!-- Pookalam + Gowri voice -->
   <section id="pookalam" class="scene pookalam-scene">
+    <div class="pookalam-glow"></div>
     <img src="assets/gowri-pookalam-face.png" alt="Gowri pookalam">
   </section>
 
-  <!-- 9: Postcard -->
+  <!-- Postcard -->
   <section id="postcard" class="scene postcard-scene">
     <article class="postcard">
-      <div class="stamp">🌼<br>ONAM</div>
+      <div class="postcard-flower">✿</div>
       <div class="small-title">A LITTLE ONAM WISH</div>
       <h1>Happy Onam, Gowri! 🌸</h1>
       <p>I haven’t even seen you in a dhavani yet, but somehow I already know you’re going to look beautiful in it. ❤️</p>
       <p>I just wanted to make this little Onam surprise especially for you.</p>
       <p class="signature">Happy Onam, Gowri! 🌼✨</p>
+      <button id="replay" class="replay-btn">Watch again ↻</button>
     </article>
   </section>
 </main>

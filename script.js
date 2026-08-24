@@ -1,35 +1,31 @@
-const ids = ['scene1','intro','scene2','scene3','scene4','scene5','scene6','pookalam','postcard'];
-const video = document.getElementById('sc1Video');
+const scenes = [...document.querySelectorAll('.scene')];
+const bookVideo = document.getElementById('sc1Video');
+const bookTitle = document.getElementById('bookTitle');
+const bookStart = document.getElementById('bookStart');
 const malare = document.getElementById('malare');
-const voice = document.getElementById('gowriVoice');
-let sc4Timer = null;
-let voiceFallback = null;
-let sc3ButtonTimer = null;
+const gowriVoice = document.getElementById('gowriVoice');
 
-function show(id) {
-  ids.forEach(x => document.getElementById(x).classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+const timers = new Set();
+const BOOK_GREEN_TIME = 8.5; // The green page is fully open around 8.5s in the supplied video.
+let bookPausedAtGreen = false;
 
-  if (id === 'scene3') {
-    startMalare();
-    const btn = document.getElementById('to4');
-    btn.classList.remove('visible');
-    clearTimeout(sc3ButtonTimer);
-    // Show the SC-3 button exactly 5 seconds after Malare starts.
-    sc3ButtonTimer = setTimeout(() => {
-      if (document.getElementById('scene3').classList.contains('active')) {
-        btn.classList.add('visible');
-      }
-    }, 5000);
-  } else {
-    stopMalare();
-    clearTimeout(sc3ButtonTimer);
-  }
+function later(fn, ms) {
+  const id = setTimeout(() => {
+    timers.delete(id);
+    fn();
+  }, ms);
+  timers.add(id);
+  return id;
+}
 
-  if (id !== 'pookalam') {
-    voice.pause();
-    voice.currentTime = 0;
-  }
+function clearTimers() {
+  timers.forEach(clearTimeout);
+  timers.clear();
+}
+
+function stopMalare() {
+  malare.pause();
+  malare.currentTime = 0;
 }
 
 function startMalare() {
@@ -38,50 +34,94 @@ function startMalare() {
   const p = malare.play();
   if (p) p.catch(() => {});
 }
-function stopMalare() {
-  malare.pause();
-  malare.currentTime = 0;
+
+function resetSceneUI(scene) {
+  scene.querySelectorAll('.popup, .corner-btn').forEach(el => el.classList.remove('show'));
 }
 
-// SC-1 is the actual anime book-opening video from VideoAI.
-video.addEventListener('ended', () => show('intro'));
-video.addEventListener('error', () => show('intro'));
+function showScene(id) {
+  clearTimers();
+  scenes.forEach(s => {
+    s.classList.remove('active');
+    resetSceneUI(s);
+  });
 
-// The button on the supplied For Gowri image starts the story.
-document.getElementById('startBtn').onclick = () => show('scene2');
+  const next = document.getElementById(id);
+  next.classList.add('active');
 
-// SC-2 -> SC-3. This click is a user gesture, so Malare can start reliably.
-document.getElementById('to3').onclick = () => show('scene3');
+  if (id === 'scene2' || id === 'scene4' || id === 'scene5' || id === 'scene6') {
+    stopMalare();
+    later(() => next.querySelector('.popup')?.classList.add('show'), 3000);
+    later(() => next.querySelector('.corner-btn')?.classList.add('show'), 3000);
+  }
 
-// SC-3 -> SC-4.
-document.getElementById('to4').onclick = () => {
-  show('scene4');
-  clearTimeout(sc4Timer);
-  sc4Timer = setTimeout(() => show('scene5'), 3000);
-};
+  if (id === 'scene3') {
+    startMalare();
+    later(() => next.querySelector('.popup')?.classList.add('show'), 3000);
+    later(() => next.querySelector('.corner-btn')?.classList.add('show'), 5000);
+  }
 
-// SC-5 -> SC-6.
-document.getElementById('to6').onclick = () => show('scene6');
+  if (id === 'pookalam') {
+    stopMalare();
+    gowriVoice.currentTime = 0;
+    gowriVoice.volume = 1;
+    const p = gowriVoice.play();
+    if (p) p.catch(() => {});
+    gowriVoice.onended = () => showScene('postcard');
+    later(() => showScene('postcard'), 15000);
+  }
 
-// SC-6 -> pookalam -> voice -> postcard.
-document.getElementById('openDoor').onclick = () => {
-  clearTimeout(sc4Timer);
-  show('pookalam');
-  voice.currentTime = 0;
-  voice.volume = 1;
-  const p = voice.play();
+  window.scrollTo(0, 0);
+}
+
+function resetBook() {
+  clearTimers();
+  bookPausedAtGreen = false;
+  bookTitle.classList.remove('show');
+  bookStart.classList.remove('show');
+  bookVideo.pause();
+  bookVideo.currentTime = 0;
+}
+
+window.addEventListener('load', () => {
+  showScene('scene1');
+  bookVideo.currentTime = 0;
+  const p = bookVideo.play();
   if (p) p.catch(() => {});
-  clearTimeout(voiceFallback);
-  voiceFallback = setTimeout(() => show('postcard'), 15000);
-};
-voice.addEventListener('ended', () => {
-  clearTimeout(voiceFallback);
-  show('postcard');
 });
 
-// Do not use sc-7. The requested flow intentionally ends VideoAI scenes at sc-6.
-window.addEventListener('load', () => {
-  video.currentTime = 0;
-  const p = video.play();
+bookVideo.addEventListener('timeupdate', () => {
+  const t = bookVideo.currentTime;
+
+  // At the fully-open green page, pause the actual video and put "For Gowri"
+  // directly on the green page. This replaces the old separate intro screen.
+  if (t >= BOOK_GREEN_TIME && !bookPausedAtGreen) {
+    bookPausedAtGreen = true;
+    bookVideo.pause();
+    bookTitle.classList.add('show');
+    bookStart.classList.add('show');
+  }
+});
+
+bookVideo.addEventListener('error', () => {
+  bookTitle.classList.add('show');
+  bookStart.classList.add('show');
+});
+
+bookStart.addEventListener('click', () => showScene('scene2'));
+
+document.getElementById('to3').addEventListener('click', () => showScene('scene3'));
+document.getElementById('to4').addEventListener('click', () => showScene('scene4'));
+document.getElementById('to5').addEventListener('click', () => showScene('scene5'));
+document.getElementById('to6').addEventListener('click', () => showScene('scene6'));
+document.getElementById('openDoor').addEventListener('click', () => showScene('pookalam'));
+
+document.getElementById('replay').addEventListener('click', () => {
+  stopMalare();
+  gowriVoice.pause();
+  gowriVoice.currentTime = 0;
+  resetBook();
+  showScene('scene1');
+  const p = bookVideo.play();
   if (p) p.catch(() => {});
 });
