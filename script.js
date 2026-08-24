@@ -77,7 +77,7 @@ function startVoice2() {
 gowriVoice.addEventListener("ended", startVoice2);
 
 gowriVoice2.addEventListener("ended", () => {
-  showScene("postcard");
+  // The pookalam already controls the postcard timing: 5 seconds.
 });
 
 function resetSceneUI(scene) {
@@ -119,7 +119,9 @@ function showScene(id) {
 
   if (id === "pookalam") {
     gowriVoice.volume = 1;
-    // Do NOT call play() here. Voice 1 is already playing.
+    // Do NOT restart Gowri voice here. It continues naturally.
+    // Show the postcard exactly 5 seconds after the pookalam appears.
+    later(() => showScene("postcard"), 5000);
   }
 
   window.scrollTo(0, 0);
