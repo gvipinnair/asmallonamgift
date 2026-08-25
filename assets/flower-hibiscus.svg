@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<defs>
+<radialGradient id="hb" cx="50%" cy="40%" r="65%">
+<stop offset="0%" stop-color="#FF7A6E"/>
+<stop offset="60%" stop-color="#E5433A"/>
+<stop offset="100%" stop-color="#B92C24"/>
+</radialGradient>
+</defs>
+<g fill="url(#hb)" stroke="#8E1E18" stroke-width="0.7">
+<path d="M50 50 C 40 30, 25 28, 20 15 C 35 15, 46 28, 50 42 C 54 28, 65 15, 80 15 C 75 28, 60 30, 50 50 Z" transform="rotate(0 50 50)"/>
+<path d="M50 50 C 40 30, 25 28, 20 15 C 35 15, 46 28, 50 42 C 54 28, 65 15, 80 15 C 75 28, 60 30, 50 50 Z" transform="rotate(72 50 50)"/>
+<path d="M50 50 C 40 30, 25 28, 20 15 C 35 15, 46 28, 50 42 C 54 28, 65 15, 80 15 C 75 28, 60 30, 50 50 Z" transform="rotate(144 50 50)"/>
+<path d="M50 50 C 40 30, 25 28, 20 15 C 35 15, 46 28, 50 42 C 54 28, 65 15, 80 15 C 75 28, 60 30, 50 50 Z" transform="rotate(216 50 50)"/>
+<path d="M50 50 C 40 30, 25 28, 20 15 C 35 15, 46 28, 50 42 C 54 28, 65 15, 80 15 C 75 28, 60 30, 50 50 Z" transform="rotate(288 50 50)"/>
+</g>
+<line x1="50" y1="50" x2="50" y2="78" stroke="#D8A93B" stroke-width="2.4"/>
+<circle cx="50" cy="78" r="3.2" fill="#FFD24C" stroke="#B9860F" stroke-width="0.5"/>
+<circle cx="46" cy="73" r="2" fill="#FFD24C"/>
+<circle cx="54" cy="73" r="2" fill="#FFD24C"/>
+<circle cx="50" cy="50" r="6" fill="#8E1E18"/>
+</svg>
