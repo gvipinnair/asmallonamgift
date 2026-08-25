@@ -11,59 +11,6 @@ const gowriVoice2 = document.getElementById("voice2");
 
 const timers = new Set();
 
-
-const bookFlowers = document.getElementById("bookFlowers");
-const envelopeBox = document.getElementById("envelopeBox");
-
-function createBookFlowers() {
-  if (!bookFlowers || bookFlowers.children.length) return;
-
-  // Onam-themed flowers: marigold, hibiscus, jasmine — each with its own
-  // natural size range and fall speed so the mix feels like real petals
-  // drifting down rather than uniform clipart.
-  const flowerTypes = [
-    { src: "assets/flower-marigold.svg", weight: 3, minSize: 30, maxSize: 54, minDur: 9,  maxDur: 13 },
-    { src: "assets/flower-hibiscus.svg", weight: 2, minSize: 26, maxSize: 46, minDur: 8,  maxDur: 12 },
-    { src: "assets/flower-jasmine.svg",  weight: 2, minSize: 34, maxSize: 58, minDur: 10, maxDur: 14 }
-  ];
-  const pool = [];
-  flowerTypes.forEach(t => { for (let i = 0; i < t.weight; i++) pool.push(t); });
-
-  const flowerCount = window.innerWidth < 600 ? 9 : 14;
-
-  for (let i = 0; i < flowerCount; i++) {
-    const type = pool[Math.floor(Math.random() * pool.length)];
-    const flower = document.createElement("img");
-    flower.className = "book-flower-petal";
-    flower.src = type.src;
-    flower.alt = "";
-
-    const size = type.minSize + Math.random() * (type.maxSize - type.minSize);
-    const duration = type.minDur + Math.random() * (type.maxDur - type.minDur);
-
-    flower.style.setProperty("--x", `${3 + Math.random() * 94}%`);
-    flower.style.setProperty("--size", `${size}px`);
-    flower.style.setProperty("--duration", `${duration}s`);
-    flower.style.setProperty("--delay", `${-Math.random() * duration}s`);
-    // Gentle one-direction drift (natural waft), not a big zigzag.
-    flower.style.setProperty("--drift", `${-36 + Math.random() * 72}px`);
-    // A soft partial tumble rather than a fast full spin.
-    flower.style.setProperty("--rotate", `${(Math.random() < 0.5 ? -1 : 1) * (90 + Math.random() * 110)}deg`);
-    flower.style.setProperty("--sway", `${8 + Math.random() * 14}px`);
-    flower.style.setProperty("--opacity", `${0.85 + Math.random() * 0.15}`);
-
-    bookFlowers.appendChild(flower);
-  }
-}
-function startBookFlowers() {
-  createBookFlowers();
-  bookFlowers?.classList.add("active");
-}
-
-function stopBookFlowers() {
-  bookFlowers?.classList.remove("active");
-}
-
 // The book has already fully opened onto the green page by ~8.0s
 // (checked frame-by-frame); it just sits static after that. Pausing
 // any later than this only adds a dead wait before the poster shows up.
@@ -170,8 +117,6 @@ function resetSceneUI(scene) {
 function showScene(id) {
   clearTimers();
 
-  if (id !== "bookScene") stopBookFlowers();
-
   scenes.forEach(scene => {
     scene.classList.remove("active");
     resetSceneUI(scene);
@@ -204,18 +149,8 @@ function showScene(id) {
   if (id === "pookalam") {
     gowriVoice.volume = 1;
     // Do NOT restart Gowri voice here. It continues naturally.
-    // The envelope arrives 5 seconds after the pookalam appears.
-    later(() => showScene("envelopeScene"), 5000);
-  }
-
-  if (id === "envelopeScene") {
-    envelopeBox?.classList.remove("open");
-    // Envelope sits closed for 3s, then opens and the postcard
-    // slides out from inside it before the scene changes.
-    later(() => {
-      envelopeBox?.classList.add("open");
-      later(() => showScene("postcard"), 1450);
-    }, 3000);
+    // Show the postcard 5 seconds after the pookalam appears.
+    later(() => showScene("postcard"), 5000);
   }
 
   window.scrollTo(0, 0);
@@ -243,9 +178,6 @@ function startBook() {
 
   // Gowri voice starts exactly when the Animated Book starts.
   startGowriVoice();
-
-  // Flowers fall from the top only during the book scene.
-  startBookFlowers();
 
   bookVideo.currentTime = 0;
 
@@ -324,7 +256,6 @@ bookVideo.addEventListener("error", () => {
  * Browser autoplay restrictions therefore allow the audio to start.
  */
 bookStart.addEventListener("click", () => {
-  stopBookFlowers();
   showScene("scene2");
 });
 
@@ -353,8 +284,6 @@ document.getElementById("replay").addEventListener("click", () => {
 
   sc1Video.pause();
   sc1Video.currentTime = 0;
-
-  envelopeBox?.classList.remove("open");
 
   resetBook();
 
