@@ -13,22 +13,7 @@ const timers = new Set();
 
 
 const bookFlowers = document.getElementById("bookFlowers");
-const bookWater = document.getElementById("bookWater");
 const envelopeBox = document.getElementById("envelopeBox");
-
-function createWaterRipples() {
-  if (!bookWater || bookWater.children.length) return;
-
-  const rippleCount = window.innerWidth < 600 ? 5 : 8;
-  for (let i = 0; i < rippleCount; i++) {
-    const ripple = document.createElement("div");
-    ripple.className = "water-ripple";
-    ripple.style.setProperty("--rx", `${5 + Math.random() * 90}%`);
-    ripple.style.setProperty("--rdur", `${2 + Math.random() * 1.6}s`);
-    ripple.style.setProperty("--rdelay", `${-Math.random() * 3}s`);
-    bookWater.appendChild(ripple);
-  }
-}
 
 function createBookFlowers() {
   if (!bookFlowers || bookFlowers.children.length) return;
@@ -72,14 +57,11 @@ function createBookFlowers() {
 }
 function startBookFlowers() {
   createBookFlowers();
-  createWaterRipples();
   bookFlowers?.classList.add("active");
-  bookWater?.classList.add("active");
 }
 
 function stopBookFlowers() {
   bookFlowers?.classList.remove("active");
-  bookWater?.classList.remove("active");
 }
 
 // The book has already fully opened onto the green page by ~8.0s
