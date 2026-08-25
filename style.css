@@ -125,7 +125,8 @@ button{font:inherit}
   }
 }
 
-/* Falling Onam flowers over the Animated Book scene */
+
+/* Elegant falling Onam flowers over the Animated Book */
 .book-flowers{
   position:absolute;
   inset:0;
@@ -133,9 +134,9 @@ button{font:inherit}
   pointer-events:none;
   z-index:12;
   opacity:0;
-  transition:opacity .5s ease;
+  transition:opacity .8s ease;
 }
-.book-flowers.active{ opacity:1; }
+.book-flowers.active{opacity:1;}
 
 .book-flower-petal{
   position:absolute;
@@ -144,49 +145,70 @@ button{font:inherit}
   width:var(--size);
   height:var(--size);
   opacity:var(--opacity);
-  transform:rotate(0deg);
-  animation:bookFlowerFall var(--duration) linear var(--delay) infinite;
-  filter:drop-shadow(0 2px 2px rgba(0,0,0,.12));
+  animation:flowerFall var(--duration) linear var(--delay) infinite;
+  transform-origin:center;
+  filter:drop-shadow(0 2px 2px rgba(72,45,20,.10));
 }
+
+/* A natural 5-petal flower rather than a flat CSS circle */
 .book-flower-petal::before{
   content:"";
   position:absolute;
-  inset:0;
-  border-radius:50% 50% 45% 45%;
-  background:
-    radial-gradient(circle at 50% 50%, #f7d77a 0 12%, transparent 13%),
-    radial-gradient(ellipse at 50% 15%, #f2a64b 0 28%, transparent 30%),
-    radial-gradient(ellipse at 85% 50%, #e88b43 0 28%, transparent 30%),
-    radial-gradient(ellipse at 50% 85%, #f4bd5b 0 28%, transparent 30%),
-    radial-gradient(ellipse at 15% 50%, #df7b42 0 28%, transparent 30%);
-}
-.book-flower-petal:nth-child(3n)::before{
-  background:
-    radial-gradient(circle at 50% 50%, #f5d477 0 12%, transparent 13%),
-    radial-gradient(ellipse at 50% 15%, #d96f5f 0 28%, transparent 30%),
-    radial-gradient(ellipse at 85% 50%, #e7a14b 0 28%, transparent 30%),
-    radial-gradient(ellipse at 50% 85%, #d96f5f 0 28%, transparent 30%),
-    radial-gradient(ellipse at 15% 50%, #e7a14b 0 28%, transparent 30%);
+  left:50%;
+  top:50%;
+  width:38%;
+  height:38%;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:radial-gradient(circle,#f8d77b 0 34%,#d89b3d 36% 100%);
+  z-index:2;
 }
 
-@keyframes bookFlowerFall{
+.book-flower-petal::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse 28% 48% at 50% 8%, var(--flower), transparent 72%),
+    radial-gradient(ellipse 28% 48% at 92% 36%, var(--flower), transparent 72%),
+    radial-gradient(ellipse 28% 48% at 70% 91%, var(--flower), transparent 72%),
+    radial-gradient(ellipse 28% 48% at 30% 91%, var(--flower), transparent 72%),
+    radial-gradient(ellipse 28% 48% at 8% 36%, var(--flower), transparent 72%);
+  transform:rotate(var(--rotation));
+}
+
+.book-flower-petal:nth-child(3n){
+  --flower:#f2b544;
+}
+.book-flower-petal:nth-child(3n+1){
+  --flower:#e77943;
+}
+.book-flower-petal:nth-child(3n+2){
+  --flower:#f0c95f;
+}
+
+@keyframes flowerFall{
   0%{
-    transform:translate3d(0,-12vh,0) rotate(0deg);
+    transform:translate3d(0,-14vh,0) rotate(0deg) scale(.92);
   }
-  25%{
-    transform:translate3d(calc(var(--drift) * .35),22vh,0) rotate(80deg);
+  22%{
+    transform:translate3d(calc(var(--drift) * -.35),18vh,0) rotate(75deg) scale(1);
   }
-  55%{
-    transform:translate3d(calc(var(--drift) * -.25),52vh,0) rotate(175deg);
+  48%{
+    transform:translate3d(calc(var(--drift) * .25),43vh,0) rotate(170deg) scale(.96);
   }
-  80%{
-    transform:translate3d(calc(var(--drift) * .55),78vh,0) rotate(270deg);
+  72%{
+    transform:translate3d(calc(var(--drift) * -.15),69vh,0) rotate(255deg) scale(1.03);
   }
   100%{
-    transform:translate3d(var(--drift),112vh,0) rotate(360deg);
+    transform:translate3d(var(--drift),115vh,0) rotate(360deg) scale(.94);
   }
+}
+
+@media (max-width:600px){
+  .book-flower-petal{filter:drop-shadow(0 1px 2px rgba(72,45,20,.08));}
 }
 
 @media (prefers-reduced-motion:reduce){
-  .book-flower-petal{ animation:none; opacity:0; }
+  .book-flower-petal{animation:none;opacity:0;}
 }

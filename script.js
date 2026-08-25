@@ -17,20 +17,24 @@ const bookFlowers = document.getElementById("bookFlowers");
 function createBookFlowers() {
   if (!bookFlowers || bookFlowers.children.length) return;
 
-  const flowerCount = window.innerWidth < 600 ? 12 : 18;
+  // Fewer, larger flowers so the effect feels elegant rather than busy.
+  const flowerCount = window.innerWidth < 600 ? 8 : 11;
+
   for (let i = 0; i < flowerCount; i++) {
-    const petal = document.createElement("span");
-    petal.className = "book-flower-petal";
-    petal.style.setProperty("--x", `${Math.random() * 100}%`);
-    petal.style.setProperty("--size", `${10 + Math.random() * 16}px`);
-    petal.style.setProperty("--duration", `${5.5 + Math.random() * 4}s`);
-    petal.style.setProperty("--delay", `${-Math.random() * 7}s`);
-    petal.style.setProperty("--drift", `${-70 + Math.random() * 140}px`);
-    petal.style.setProperty("--opacity", `${0.62 + Math.random() * 0.28}`);
-    bookFlowers.appendChild(petal);
+    const flower = document.createElement("span");
+    flower.className = "book-flower-petal";
+
+    flower.style.setProperty("--x", `${5 + Math.random() * 90}%`);
+    flower.style.setProperty("--size", `${16 + Math.random() * 13}px`);
+    flower.style.setProperty("--duration", `${7 + Math.random() * 4.5}s`);
+    flower.style.setProperty("--delay", `${-Math.random() * 8}s`);
+    flower.style.setProperty("--drift", `${-45 + Math.random() * 90}px`);
+    flower.style.setProperty("--opacity", `${0.55 + Math.random() * 0.28}`);
+    flower.style.setProperty("--rotation", `${Math.random() * 72}deg`);
+
+    bookFlowers.appendChild(flower);
   }
 }
-
 function startBookFlowers() {
   createBookFlowers();
   bookFlowers?.classList.add("active");
@@ -108,7 +112,14 @@ function startVoice2() {
 gowriVoice.addEventListener("ended", startVoice2);
 
 gowriVoice2.addEventListener("ended", () => {
-  // The pookalam already controls the postcard timing: 5 seconds.
+  // Voice 1 + Voice 2 form one continuous audio loop.
+  // When both have finished, start Voice 1 again.
+  voice2Started = false;
+  gowriVoice.currentTime = 0;
+  gowriVoice.volume = 1;
+
+  const p = gowriVoice.play();
+  if (p) p.catch(err => console.warn("Gowri voice loop could not restart:", err));
 });
 
 function resetSceneUI(scene) {
