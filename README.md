@@ -42,3 +42,7 @@ At the pookalam reveal, `gowri-voice.mp3` plays first. When it naturally finishe
 
 ## Voice sequence
 `gowri-voice.mp3` plays first. The instant it naturally ends, `gowri-voice-2.mp3` starts. When voice 2 ends, the postcard appears.
+
+
+### Latest change
+The green page in Animated Book is covered with `assets/onam-book-poster.png`, an Onam-themed poster with “For Gowri”. The existing clickable “Shall we start?” button remains positioned over the poster.
