@@ -1,6 +1,7 @@
 const scenes = [...document.querySelectorAll(".scene")];
 
 const sc1Video = document.getElementById("sc1Video");
+const startExperience = document.getElementById("startExperience");
 const bookVideo = document.getElementById("bookVideo");
 const bookTitle = document.getElementById("bookTitle");
 const bookStart = document.getElementById("bookStart");
@@ -153,16 +154,35 @@ function startBook() {
 
 window.addEventListener("load", () => {
   stopAllAudio();
-
   showScene("scene1");
-
   sc1Video.currentTime = 0;
 
+  // Try autoplay on laptop/desktop. Mobile browsers may reject autoplay
+  // when the video has sound; the visible Start button handles that case.
   const p = sc1Video.play();
-  if (p) p.catch(err => console.warn("SC-1 video play failed:", err));
+  if (p) {
+    p.then(() => {
+      startExperience?.classList.add("hidden");
+    }).catch(() => {
+      startExperience?.classList.remove("hidden");
+    });
+  } else {
+    startExperience?.classList.remove("hidden");
+  }
+});
+
+startExperience?.addEventListener("click", async () => {
+  try {
+    sc1Video.currentTime = 0;
+    await sc1Video.play();
+    startExperience.classList.add("hidden");
+  } catch (err) {
+    console.warn("SC-1 could not start:", err);
+  }
 });
 
 /* SC-1 finishes -> Animated Book */
+sc1Video.addEventListener("play", () => startExperience?.classList.add("hidden"));
 sc1Video.addEventListener("ended", startBook);
 sc1Video.addEventListener("error", startBook);
 
@@ -225,5 +245,8 @@ document.getElementById("replay").addEventListener("click", () => {
   showScene("scene1");
 
   const p = sc1Video.play();
-  if (p) p.catch(err => console.warn("Replay SC-1 play failed:", err));
+  if (p) {
+    p.then(() => startExperience?.classList.add("hidden"))
+     .catch(() => startExperience?.classList.remove("hidden"));
+  }
 });
