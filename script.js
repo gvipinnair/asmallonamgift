@@ -17,33 +17,39 @@ const bookFlowers = document.getElementById("bookFlowers");
 function createBookFlowers() {
   if (!bookFlowers || bookFlowers.children.length) return;
 
-  // Clean flower illustrations based on the flower style you provided.
-  // They have transparent backgrounds, so no square/green/white box will fall.
-  const flowerFiles = [
-    "assets/falling-pink-cluster.png",
-    "assets/falling-pink-single.png",
-    "assets/falling-pink-single.png",
-    "assets/falling-pink-cluster.png"
+  // Onam-themed flowers: marigold, hibiscus, jasmine — each with its own
+  // natural size range and fall speed so the mix feels like real petals
+  // drifting down rather than uniform clipart.
+  const flowerTypes = [
+    { src: "assets/flower-marigold.svg", weight: 3, minSize: 30, maxSize: 54, minDur: 9,  maxDur: 13 },
+    { src: "assets/flower-hibiscus.svg", weight: 2, minSize: 26, maxSize: 46, minDur: 8,  maxDur: 12 },
+    { src: "assets/flower-jasmine.svg",  weight: 2, minSize: 34, maxSize: 58, minDur: 10, maxDur: 14 }
   ];
+  const pool = [];
+  flowerTypes.forEach(t => { for (let i = 0; i < t.weight; i++) pool.push(t); });
 
-  const flowerCount = window.innerWidth < 600 ? 7 : 11;
+  const flowerCount = window.innerWidth < 600 ? 9 : 14;
 
   for (let i = 0; i < flowerCount; i++) {
+    const type = pool[Math.floor(Math.random() * pool.length)];
     const flower = document.createElement("img");
     flower.className = "book-flower-petal";
-    flower.src = flowerFiles[i % flowerFiles.length];
+    flower.src = type.src;
     flower.alt = "";
 
-    const isCluster = flower.src.includes("cluster");
+    const size = type.minSize + Math.random() * (type.maxSize - type.minSize);
+    const duration = type.minDur + Math.random() * (type.maxDur - type.minDur);
+
     flower.style.setProperty("--x", `${3 + Math.random() * 94}%`);
-    flower.style.setProperty("--size", isCluster
-      ? `${62 + Math.random() * 48}px`
-      : `${34 + Math.random() * 32}px`);
-    flower.style.setProperty("--duration", `${8 + Math.random() * 5}s`);
-    flower.style.setProperty("--delay", `${-Math.random() * 10}s`);
-    flower.style.setProperty("--drift", `${-75 + Math.random() * 150}px`);
-    flower.style.setProperty("--rotate", `${-18 + Math.random() * 36}deg`);
-    flower.style.setProperty("--opacity", `${0.82 + Math.random() * 0.18}`);
+    flower.style.setProperty("--size", `${size}px`);
+    flower.style.setProperty("--duration", `${duration}s`);
+    flower.style.setProperty("--delay", `${-Math.random() * duration}s`);
+    // Gentle one-direction drift (natural waft), not a big zigzag.
+    flower.style.setProperty("--drift", `${-36 + Math.random() * 72}px`);
+    // A soft partial tumble rather than a fast full spin.
+    flower.style.setProperty("--rotate", `${(Math.random() < 0.5 ? -1 : 1) * (90 + Math.random() * 110)}deg`);
+    flower.style.setProperty("--sway", `${8 + Math.random() * 14}px`);
+    flower.style.setProperty("--opacity", `${0.85 + Math.random() * 0.15}`);
 
     bookFlowers.appendChild(flower);
   }
@@ -57,7 +63,13 @@ function stopBookFlowers() {
   bookFlowers?.classList.remove("active");
 }
 
-const BOOK_GREEN_TIME = 8.5;
+// The book has already fully opened onto the green page by ~8.0s
+// (checked frame-by-frame); it just sits static after that. Pausing
+// any later than this only adds a dead wait before the poster shows up.
+const BOOK_GREEN_TIME = 8.0;
+// Start blending the poster in while the page is still swinging open,
+// so it arrives together with the page instead of after it.
+const BOOK_CROSSFADE_START = 7.55;
 let bookPausedAtGreen = false;
 let voice2Started = false;
 
@@ -203,6 +215,7 @@ function resetBook() {
 
   bookPausedAtGreen = false;
   bookTitle.classList.remove("show");
+  bookTitle.style.opacity = "0";
   bookStart.classList.remove("show");
 
   bookVideo.pause();
@@ -214,6 +227,7 @@ function startBook() {
 
   bookPausedAtGreen = false;
   bookTitle.classList.remove("show");
+  bookTitle.style.opacity = "0";
   bookStart.classList.remove("show");
 
   // Gowri voice starts exactly when the Animated Book starts.
@@ -262,21 +276,34 @@ sc1Video.addEventListener("play", () => startExperience?.classList.add("hidden")
 sc1Video.addEventListener("ended", startBook);
 sc1Video.addEventListener("error", startBook);
 
-/* Animated Book pauses at the green-page frame */
+/* Animated Book: poster blends in while the page is still opening,
+ * and is fully visible exactly when the page settles at BOOK_GREEN_TIME. */
 bookVideo.addEventListener("timeupdate", () => {
-  if (bookVideo.currentTime >= BOOK_GREEN_TIME && !bookPausedAtGreen) {
+  if (bookPausedAtGreen) return;
+
+  if (bookVideo.currentTime >= BOOK_CROSSFADE_START) {
+    const progress = Math.min(
+      1,
+      (bookVideo.currentTime - BOOK_CROSSFADE_START) / (BOOK_GREEN_TIME - BOOK_CROSSFADE_START)
+    );
+    bookTitle.classList.add("show");
+    bookTitle.style.opacity = String(progress);
+  }
+
+  if (bookVideo.currentTime >= BOOK_GREEN_TIME) {
     bookPausedAtGreen = true;
 
     bookVideo.currentTime = BOOK_GREEN_TIME;
     bookVideo.pause();
 
-    bookTitle.classList.add("show");
+    bookTitle.style.opacity = "1";
     bookStart.classList.add("show");
   }
 });
 
 bookVideo.addEventListener("error", () => {
   bookTitle.classList.add("show");
+  bookTitle.style.opacity = "1";
   bookStart.classList.add("show");
 });
 
