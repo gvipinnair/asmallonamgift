@@ -10,6 +10,36 @@ const gowriVoice = document.getElementById("gowriVoice");
 const gowriVoice2 = document.getElementById("voice2");
 
 const timers = new Set();
+
+
+const bookFlowers = document.getElementById("bookFlowers");
+
+function createBookFlowers() {
+  if (!bookFlowers || bookFlowers.children.length) return;
+
+  const flowerCount = window.innerWidth < 600 ? 12 : 18;
+  for (let i = 0; i < flowerCount; i++) {
+    const petal = document.createElement("span");
+    petal.className = "book-flower-petal";
+    petal.style.setProperty("--x", `${Math.random() * 100}%`);
+    petal.style.setProperty("--size", `${10 + Math.random() * 16}px`);
+    petal.style.setProperty("--duration", `${5.5 + Math.random() * 4}s`);
+    petal.style.setProperty("--delay", `${-Math.random() * 7}s`);
+    petal.style.setProperty("--drift", `${-70 + Math.random() * 140}px`);
+    petal.style.setProperty("--opacity", `${0.62 + Math.random() * 0.28}`);
+    bookFlowers.appendChild(petal);
+  }
+}
+
+function startBookFlowers() {
+  createBookFlowers();
+  bookFlowers?.classList.add("active");
+}
+
+function stopBookFlowers() {
+  bookFlowers?.classList.remove("active");
+}
+
 const BOOK_GREEN_TIME = 8.5;
 let bookPausedAtGreen = false;
 let voice2Started = false;
@@ -89,6 +119,8 @@ function resetSceneUI(scene) {
 function showScene(id) {
   clearTimers();
 
+  if (id !== "bookScene") stopBookFlowers();
+
   scenes.forEach(scene => {
     scene.classList.remove("active");
     resetSceneUI(scene);
@@ -145,6 +177,12 @@ function startBook() {
   bookPausedAtGreen = false;
   bookTitle.classList.remove("show");
   bookStart.classList.remove("show");
+
+  // Gowri voice starts exactly when the Animated Book starts.
+  startGowriVoice();
+
+  // Flowers fall from the top only during the book scene.
+  startBookFlowers();
 
   bookVideo.currentTime = 0;
 
@@ -210,7 +248,7 @@ bookVideo.addEventListener("error", () => {
  * Browser autoplay restrictions therefore allow the audio to start.
  */
 bookStart.addEventListener("click", () => {
-  startGowriVoice();
+  stopBookFlowers();
   showScene("scene2");
 });
 
