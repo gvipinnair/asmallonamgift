@@ -13,6 +13,22 @@ const timers = new Set();
 
 
 const bookFlowers = document.getElementById("bookFlowers");
+const bookWater = document.getElementById("bookWater");
+const envelopeBox = document.getElementById("envelopeBox");
+
+function createWaterRipples() {
+  if (!bookWater || bookWater.children.length) return;
+
+  const rippleCount = window.innerWidth < 600 ? 5 : 8;
+  for (let i = 0; i < rippleCount; i++) {
+    const ripple = document.createElement("div");
+    ripple.className = "water-ripple";
+    ripple.style.setProperty("--rx", `${5 + Math.random() * 90}%`);
+    ripple.style.setProperty("--rdur", `${2 + Math.random() * 1.6}s`);
+    ripple.style.setProperty("--rdelay", `${-Math.random() * 3}s`);
+    bookWater.appendChild(ripple);
+  }
+}
 
 function createBookFlowers() {
   if (!bookFlowers || bookFlowers.children.length) return;
@@ -56,11 +72,14 @@ function createBookFlowers() {
 }
 function startBookFlowers() {
   createBookFlowers();
+  createWaterRipples();
   bookFlowers?.classList.add("active");
+  bookWater?.classList.add("active");
 }
 
 function stopBookFlowers() {
   bookFlowers?.classList.remove("active");
+  bookWater?.classList.remove("active");
 }
 
 // The book has already fully opened onto the green page by ~8.0s
@@ -203,8 +222,18 @@ function showScene(id) {
   if (id === "pookalam") {
     gowriVoice.volume = 1;
     // Do NOT restart Gowri voice here. It continues naturally.
-    // Show the postcard exactly 5 seconds after the pookalam appears.
-    later(() => showScene("postcard"), 5000);
+    // The envelope arrives 5 seconds after the pookalam appears.
+    later(() => showScene("envelopeScene"), 5000);
+  }
+
+  if (id === "envelopeScene") {
+    envelopeBox?.classList.remove("open");
+    // Envelope sits closed for 3s, then opens and the postcard
+    // slides out from inside it before the scene changes.
+    later(() => {
+      envelopeBox?.classList.add("open");
+      later(() => showScene("postcard"), 1450);
+    }, 3000);
   }
 
   window.scrollTo(0, 0);
@@ -342,6 +371,8 @@ document.getElementById("replay").addEventListener("click", () => {
 
   sc1Video.pause();
   sc1Video.currentTime = 0;
+
+  envelopeBox?.classList.remove("open");
 
   resetBook();
 
