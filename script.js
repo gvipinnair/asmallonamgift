@@ -17,20 +17,33 @@ const bookFlowers = document.getElementById("bookFlowers");
 function createBookFlowers() {
   if (!bookFlowers || bookFlowers.children.length) return;
 
-  // Fewer, larger flowers so the effect feels elegant rather than busy.
-  const flowerCount = window.innerWidth < 600 ? 8 : 11;
+  // Clean flower illustrations based on the flower style you provided.
+  // They have transparent backgrounds, so no square/green/white box will fall.
+  const flowerFiles = [
+    "assets/falling-pink-cluster.png",
+    "assets/falling-pink-single.png",
+    "assets/falling-pink-single.png",
+    "assets/falling-pink-cluster.png"
+  ];
+
+  const flowerCount = window.innerWidth < 600 ? 7 : 11;
 
   for (let i = 0; i < flowerCount; i++) {
-    const flower = document.createElement("span");
+    const flower = document.createElement("img");
     flower.className = "book-flower-petal";
+    flower.src = flowerFiles[i % flowerFiles.length];
+    flower.alt = "";
 
-    flower.style.setProperty("--x", `${5 + Math.random() * 90}%`);
-    flower.style.setProperty("--size", `${16 + Math.random() * 13}px`);
-    flower.style.setProperty("--duration", `${7 + Math.random() * 4.5}s`);
-    flower.style.setProperty("--delay", `${-Math.random() * 8}s`);
-    flower.style.setProperty("--drift", `${-45 + Math.random() * 90}px`);
-    flower.style.setProperty("--opacity", `${0.55 + Math.random() * 0.28}`);
-    flower.style.setProperty("--rotation", `${Math.random() * 72}deg`);
+    const isCluster = flower.src.includes("cluster");
+    flower.style.setProperty("--x", `${3 + Math.random() * 94}%`);
+    flower.style.setProperty("--size", isCluster
+      ? `${62 + Math.random() * 48}px`
+      : `${34 + Math.random() * 32}px`);
+    flower.style.setProperty("--duration", `${8 + Math.random() * 5}s`);
+    flower.style.setProperty("--delay", `${-Math.random() * 10}s`);
+    flower.style.setProperty("--drift", `${-75 + Math.random() * 150}px`);
+    flower.style.setProperty("--rotate", `${-18 + Math.random() * 36}deg`);
+    flower.style.setProperty("--opacity", `${0.82 + Math.random() * 0.18}`);
 
     bookFlowers.appendChild(flower);
   }
@@ -97,6 +110,7 @@ function startVoice2() {
   if (voice2Started) return;
 
   voice2Started = true;
+  gowriVoice2.pause();
   gowriVoice2.currentTime = 0;
   gowriVoice2.volume = 1;
 
@@ -112,14 +126,27 @@ function startVoice2() {
 gowriVoice.addEventListener("ended", startVoice2);
 
 gowriVoice2.addEventListener("ended", () => {
-  // Voice 1 + Voice 2 form one continuous audio loop.
-  // When both have finished, start Voice 1 again.
+  // Voice 1 + Voice 2 repeat continuously.
   voice2Started = false;
+  gowriVoice.pause();
   gowriVoice.currentTime = 0;
   gowriVoice.volume = 1;
 
-  const p = gowriVoice.play();
-  if (p) p.catch(err => console.warn("Gowri voice loop could not restart:", err));
+  // Restart from a fresh media state after the natural end event.
+  setTimeout(() => {
+    if (document.hidden) return;
+    const p = gowriVoice.play();
+    if (p) {
+      p.catch(() => {
+        // A phone may temporarily reject the promise; retry once shortly.
+        setTimeout(() => {
+          gowriVoice.play().catch(err =>
+            console.warn("Gowri voice loop could not restart:", err)
+          );
+        }, 250);
+      });
+    }
+  }, 40);
 });
 
 function resetSceneUI(scene) {
